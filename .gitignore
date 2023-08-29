@@ -9,5 +9,6 @@
 
 # production
 **/build
+**/dist
 **/npm-debug.log*
 
