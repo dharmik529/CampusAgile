@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom'; // Import Link from React Router
+import { Link } from 'react-router-dom';
 import {
   Box,
   Text,
@@ -18,17 +18,15 @@ import HomeNavbar from './HomeNavbar';
 function Home() {
   return (
     <Box>
-      {/* Top Navigation Bar */}
-      <Box bg="transparent" pt={4}> {/* Add top padding here */}
+      <Box bg="transparent" pt={4}>
         <HomeNavbar />
       </Box>
 
       <Container maxW="container.xl" p={4}>
-        {/* Software Cards Section */}
         <Text fontSize="l" fontWeight="bold" mb={4}>
           Switch to
         </Text>
-        <SimpleGrid columns={4} spacing={4}>
+        <SimpleGrid columns={{ base: 1, sm: 2, md: 3, lg: 4 }} spacing={4}>
 
           {/* Kanban Card */}
           <GridItem>
