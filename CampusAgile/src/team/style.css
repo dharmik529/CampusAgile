@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #ffffff;
+    font-family: 'Poppins', sans-serif;
+}
+
+.text-animation {
+    font-size: 24px;
+    font-weight: bold;
+    background: linear-gradient(45deg, #8a4fff, #a64dff, #bf3cff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: animateText 2s linear infinite;
+  }
+
+  @keyframes animateText {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }

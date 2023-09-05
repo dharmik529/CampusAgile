@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body
+        {
+            background:  #7a959884;
+        }
+        .maincontainer
+        {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .monkeylogin
+        {
+            width: 350px;
+            height: 500px;
+            box-shadow: 0 10px 25px rgba(216, 211, 211, 0.2);
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            background-color: rgb(255, 255, 255);
+            border-radius: 40px;
+        }
+        .animcon
+        {
+            background-color: white;
+
+            overflow: hidden;
+            margin-top:20px;
+            height: 170px;
+            width: 170px;
+            border-radius: 50%;
+            background-image:url(https://raw.githubusercontent.com/naaficodes/Monkey-Login/master/images/monkey.gif);
+            background-size: 90% 85%;
+            background-repeat: no-repeat;
+            background-position: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, .2);
+
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+        }
+        .animcon img
+        {
+            margin-top:110%;
+            height: 170px;
+            width: 170px;
+            transition: 1s;
+        }
+
+        .formcon
+        {
+            margin-top: 38px;
+        }
+        input
+        {
+            height: 40px;
+            width: 300px;
+            /*background-color: #254E58;*/
+            border-radius: 20px;
+            border:none;
+            color: #5a5449;
+            text-indent: 15px;
+            font-size: 100%;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, .2);
+            outline: none;
+        }
+        input::placeholder
+        {
+            color:lightgrey;
+            font-size: 100%;
+            font-weight: lighter;
+            text-indent: 15px;
+        }
+        .sbutton
+        {
+            text-indent: 0px;
+            height: 40px;
+            width: 300px;
+            margin-top: 10px;
+            background-color: #1b8c1b66;
+            transition: "2s";
+            border: none;
+            color: white;
+            font-weight: bolder;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, .2);
+            outline: none;
+
+        }
+        .sbutton:hover
+        {
+            color: #5a5449;
+            cursor: pointer;
+        }
+
+        .foot
+        {
+            color: #5a5449;
+            font-weight: lighter;
+            margin-top: 40px;
+        }
+
+    </style>
+
+</head>
+<body>
+<div class="maincontainer">
+<div class="monkeylogin">
+	<div class="animcon" id="animcon">
+		<img id="hands" src="https://raw.githubusercontent.com/naaficodes/Monkey-Login/master/images/hands.png"/>
+	</div>
+	<div class="formcon">
+	<form>
+		<input type="email" id="mail" name="" onclick="openeye();" class="tb" placeholder="Email" autocomplete="off"/>
+		<br/>
+		<br/>
+		<input type="password" id="pwdbar" onclick="closeye();" name="pwd" class="tb"placeholder="Password" />
+		<br/>
+		<br/>
+		<input type="submit" name="" class="sbutton" value="L O G I N" />
+	</form>
+
+
+	</div>
+		<footer class="foot"><a style="color: #bababa; text-decoration: none;" href="https://deeppatel.tech">Deeppatel.tech</a></footer>
+</div>
+</div>
+<script>
+    var x=document.getElementById("hands");
+    var y=document.getElementById("animcon");
+    function closeye()
+    {
+        y.style.backgroundImage="url(https://raw.githubusercontent.com/naaficodes/Monkey-Login/master/images/monkey_pwd.gif)";
+        x.style.marginTop="0%";
+    }
+    function openeye()
+    {
+        y.style.backgroundImage="url(https://raw.githubusercontent.com/naaficodes/Monkey-Login/master/images/monkey.gif)";
+        x.style.marginTop="110%";
+    }
+</script>
+</body>
+</html>
