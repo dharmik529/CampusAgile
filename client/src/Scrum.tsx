@@ -12,6 +12,7 @@ import {
 } from '@chakra-ui/react';
 import { EditIcon, DeleteIcon, ArrowBackIcon } from '@chakra-ui/icons';
 import { Link } from 'react-router-dom';
+import { useColorMode } from '@chakra-ui/react'; // Import useColorMode
 
 function Scrum() {
   const [note, setNote] = useState('');
@@ -71,6 +72,8 @@ function Scrum() {
     setNoteHistory(updatedNotes);
   };
 
+  const { colorMode } = useColorMode(); // Get the current color mode
+
   return (
     <Flex
       p={4}
@@ -78,9 +81,10 @@ function Scrum() {
       align="center"
       justify="center"
       minH="100vh"
-      bg="gray.100"
+      bg={colorMode === 'dark' ? 'gray.800' : 'gray.100'} // Use colorMode for background
     >
-      <Box maxW="800px" width="100%" bg="white" p={6} borderRadius="lg" boxShadow="md">
+      
+      <Box maxW="800px" width="100%" bg={colorMode === 'dark' ? 'gray.700' : 'white'} p={6} borderRadius="lg" boxShadow="md">
         <Heading as="h1" size="lg" textAlign="center" mb={4}>
           Scrum Notes
         </Heading>
@@ -105,7 +109,7 @@ function Scrum() {
         {noteHistory.map((note, index) => (
           <SlideFade in key={index} offsetY="20px">
             <Box
-              bg="white"
+              bg={colorMode === 'dark' ? 'gray.600' : 'white'} // Use colorMode for note background
               borderWidth="1px"
               borderRadius="lg"
               p={4}
@@ -141,24 +145,27 @@ function Scrum() {
                   onBlur={handleSaveNote}
                 />
               ) : (
-                <Text fontSize="md">{note.note}</Text>
+                <Text fontSize="md" color={colorMode === 'dark' ? 'white' : 'gray.600'}> 
+                  {note.note}
+                </Text>
               )}
             </Box>
           </SlideFade>
         ))}
       </Box>
-      <Link to="/">
-        <IconButton
+      <IconButton
+          as={Link}
+          to="/"
+          bottom="20px"
+          right="20px"
           icon={<ArrowBackIcon />}
+          zIndex="999"
           aria-label="Home"
           size="md"
           colorScheme="teal"
           mt={4}
-          position="absolute"
-          bottom="20px"
-          right="20px"
+          position="fixed"
         />
-      </Link>
     </Flex>
   );
 }

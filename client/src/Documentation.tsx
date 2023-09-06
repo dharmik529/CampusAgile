@@ -11,8 +11,11 @@ import {
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import { ArrowBackIcon } from '@chakra-ui/icons';
+import { useColorMode } from '@chakra-ui/react'; // Import useColorMode
 
 function Documentation() {
+  const { colorMode } = useColorMode(); // Get the current color mode
+
   return (
     <Flex
       p={4}
@@ -20,7 +23,7 @@ function Documentation() {
       align="center"
       justify="center"
       minH="100vh"
-      bg="gray.100"
+      bg={colorMode === 'dark' ? 'gray.800' : 'gray.100'} // Use colorMode for background
       paddingBottom="75px"
     >
       <Box
@@ -30,7 +33,7 @@ function Documentation() {
         boxShadow="md"
         maxW="800px"
         margin="0 auto"
-        bg="white"
+        bg={colorMode === 'dark' ? 'gray.700' : 'white'} // Use colorMode for background
         mt={8}
       >
         <Heading as="h1" size="xl" mb={4}>
@@ -50,7 +53,7 @@ function Documentation() {
           .
         </Text>
         <Text fontSize="lg" mb={4}>
-          Page-Long Information: The Kanban board is a powerful tool that helps
+          The Kanban board is a powerful tool that helps
           teams visualize their work and workflow. It allows teams to track the
           progress of tasks as they move through different stages, such as "To
           Do," "In Progress," and "Done." You can easily create new tasks, drag
@@ -76,7 +79,7 @@ function Documentation() {
           .
         </Text>
         <Text fontSize="lg" mb={4}>
-          Page-Long Information: Scrum Notes is a valuable tool for Agile teams
+          Scrum Notes is a valuable tool for Agile teams
           to capture important information during their development process.
           With Scrum Notes, you can document discussions, decisions, and updates
           related to your project. Each note is timestamped, making it easy to
@@ -145,18 +148,20 @@ function Documentation() {
             </ChakraLink>
           </ListItem>
         </List>
-        <Link to="/">
-          <IconButton
-            icon={<ArrowBackIcon />}
-            aria-label="Home"
-            size="md"
-            colorScheme="teal"
-            mt={4}
-            position="absolute"
-            bottom="20px"
-            right="20px"
-          />
-        </Link>
+
+        <IconButton
+          as={Link}
+          to="/"
+          bottom="20px"
+          right="20px"
+          icon={<ArrowBackIcon />}
+          zIndex="999"
+          aria-label="Home"
+          size="md"
+          colorScheme="teal"
+          mt={4}
+          position="fixed"
+        />
       </Box>
     </Flex>
   );

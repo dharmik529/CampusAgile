@@ -6,14 +6,19 @@ import {
   FormLabel,
   Input,
   Text,
-  Textarea,
+  IconButton,
   Button,
 } from '@chakra-ui/react';
-import { motion } from 'framer-motion'; // Import motion from framer-motion
+import { motion } from 'framer-motion';
+import { useColorMode } from '@chakra-ui/react'; // Import useColorMode
+import { ArrowBackIcon } from '@chakra-ui/icons';
+import { Link } from 'react-router-dom';
 
-const MotionBox = motion(Box); // Wrap your Box component with MotionBox
+const MotionBox = motion(Box);
 
 function AccountSetting() {
+  const { colorMode } = useColorMode(); // Get the current color mode
+
   const [userInfo, setUserInfo] = useState({
     name: 'John Doe',
     jobTitle: 'Software Engineer',
@@ -42,15 +47,16 @@ function AccountSetting() {
       p={4}
       borderWidth="1px"
       borderRadius="lg"
-      boxShadow="lg" // Add shadow
+      boxShadow="lg"
       maxW="500px"
       margin="0 auto"
       marginTop="35px"
       marginBottom="35px"
-      bg="white"
-      initial={{ opacity: 0, y: 20 }} // Initial animation state
-      animate={{ opacity: 1, y: 0 }} // Animation on component mount
-      transition={{ duration: 0.5 }} // Animation duration
+      bg={colorMode === 'dark' ? 'gray.700' : 'white'} // Use colorMode for background
+      color={colorMode === 'dark' ? 'white' : 'black'} // Use colorMode for text color
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
     >
       <Text fontSize="2xl" fontWeight="bold" textAlign="center" my={4}>
         Account Settings
@@ -131,7 +137,21 @@ function AccountSetting() {
       <Button mt={4} colorScheme="blue" onClick={handleSave}>
         Save Changes
       </Button>
+      <IconButton
+          as={Link}
+          to="/"
+          bottom="20px"
+          right="20px"
+          icon={<ArrowBackIcon />}
+          zIndex="999"
+          aria-label="Home"
+          size="md"
+          colorScheme="teal"
+          mt={4}
+          position="fixed"
+        />
       </MotionBox>
+      
   );
 }
 

@@ -12,13 +12,15 @@ import {
   Input,
   Box,
   Divider,
+  useColorMode,
 } from '@chakra-ui/react';
 import {
   SettingsIcon,
   QuestionOutlineIcon,
   BellIcon,
 } from '@chakra-ui/icons'; // Import icons from Chakra UI
-import { size } from 'lodash';
+import { Link } from 'react-router-dom';
+import DarkModeIconButton from './DarkMode';
 
 function HomeNavbar() {
   const navbarStyle = {
@@ -36,8 +38,11 @@ function HomeNavbar() {
     transform: 'rotate(45deg)', // Apply the rotate transformation
   };
 
+  const { colorMode } = useColorMode();
+  const navbarBgColor = colorMode === 'dark' ? 'gray.900' : 'transparent';
+
   return (
-    <Flex justifyContent="space-between" alignItems="center" mb={2} style={navbarStyle}>
+    <Flex justifyContent="space-between" alignItems="center" mb={2} style={{ ...navbarStyle, backgroundColor: navbarBgColor }}>
       <Flex alignItems="center">
         <Text fontSize="lg" fontWeight="bold" mr={4} paddingLeft='20px' paddingRight='20px'>
           CampusAgile
@@ -79,7 +84,7 @@ function HomeNavbar() {
             mr={2}
             style={{ ...iconButtonStyle, ...rotateStyle }} // Apply the custom styles here
             _hover={{
-                bg: '#ADD8E6',
+                bg: navbarBgColor,
                 borderRadius: '50%', // Make it round on hover
                 
             }}
@@ -117,7 +122,7 @@ function HomeNavbar() {
             mr={2}
             style={iconButtonStyle}
             _hover={{
-              bg: '#ADD8E6',
+              bg: navbarBgColor,
               borderRadius: '50%',
             }}
           />
@@ -152,35 +157,37 @@ function HomeNavbar() {
           mr={2}
           style={iconButtonStyle} // Apply the custom style here
           _hover={{
-            bg: '#ADD8E6',
+            bg: navbarBgColor,
             borderRadius: '50%', // Make it round on hover
           }}
         />
 
-  <Menu>
-    <MenuButton
-      as={Avatar}
-      name="Deep Patel"
-      src="user-profile-image-url.jpg"
-      size="sm"
-      fontSize="0.8rem"
-      lineHeight="1"
-      padding='10px'
-      textAlign="center"
-      display="flex"
-      alignItems="center"
-      justifyContent="center"
-      cursor="pointer"
-    />
-    <MenuList width='300px' height='135px'>
-      <Text fontSize="lg" fontWeight="bold" textAlign="center">
-        DEEP PATEL
-      </Text>
-      <Divider my="2" /> {/* Add a line between items */}
-      <MenuItem fontSize="lg">Account Settings</MenuItem> {/* Increase the font size */}
-      <MenuItem>Logout</MenuItem>
-    </MenuList>
-  </Menu>
+        <Menu>
+          <MenuButton
+            as={Avatar}
+            name="Deep Patel"
+            src="user-profile-image-url.jpg"
+            size="sm"
+            fontSize="0.8rem"
+            lineHeight="1"
+            padding='10px'
+            textAlign="center"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            cursor="pointer"
+          />
+          <MenuList width='300px' height='135px'>
+            <Text fontSize="lg" fontWeight="bold" textAlign="center">
+              DEEP PATEL
+            </Text>
+            <Divider my="2" /> {/* Add a line between items */}
+            <MenuItem fontSize="lg">
+              <Link to="/accountsetting">Account Settings</Link> {/* Add the Link component */}
+            </MenuItem>            
+            <MenuItem>Logout</MenuItem>
+          </MenuList>
+        </Menu>
 
 
       </Flex>

@@ -1,69 +1,166 @@
 import React, { useState } from 'react';
+import {
+  Box,
+  Container,
+  Heading,
+  Input,
+  FormControl,
+  FormLabel,
+  Button,
+  Text,
+  useColorMode,
+  IconButton,
+} from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
+import { ArrowBackIcon } from '@chakra-ui/icons';
 
 function Login() {
-  const [passwordVisible, setPasswordVisible] = useState(false);
+  const { colorMode } = useColorMode();
 
-  const togglePasswordVisibility = () => {
-    setPasswordVisible(!passwordVisible);
+  const [isLogin, setIsLogin] = useState(true);
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    universityEmail: '',
+    phoneNumber: '',
+    password: '',
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (isLogin) {
+      // Handle login logic
+    } else {
+      // Handle signup logic
+    }
   };
 
   return (
-    <div className="maincontainer">
-      <div className="monkeylogin">
-        <div className="animcon" id="animcon">
-          <img
-            id="hands"
-            src="https://raw.githubusercontent.com/naaficodes/Monkey-Login/master/images/hands.png"
-          />
-        </div>
-        <div className="formcon">
-          <form>
-            <input
-              type="email"
-              id="mail"
-              name=""
-              onClick={togglePasswordVisibility}
-              className="tb"
-              placeholder="Email"
-              autoComplete="off"
-            />
-            <br />
-            <br />
-            <div style={{ position: 'relative' }}>
-              <input
-                type={passwordVisible ? 'text' : 'password'}
-                id="pwdbar"
-                name="pwd"
-                onClick={togglePasswordVisibility}
-                className="tb"
-                placeholder="Password"
-              />
-              <span
-                style={{
-                  position: 'absolute',
-                  right: '15px',
-                  top: '50%',
-                  transform: 'translateY(-50%)',
-                  cursor: 'pointer',
-                }}
-                onClick={togglePasswordVisibility}
-              >
-                {passwordVisible ? 'Hide' : 'Show'}
-              </span>
-            </div>
-            <br />
-            <br />
-            <input
-              type="submit"
-              name=""
-              className="sbutton"
-              value="L O G I N"
-            />
-          </form>
-        </div>
+    <Box
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      minHeight="100vh"
+      bg={colorMode === 'dark' ? 'gray.980' : 'gray.200'}
+    >
+      <Container
+        maxW="container.sm"
+        py={8}
+        borderRadius="10px"
+        boxShadow="md"
+        textAlign="center"
+        position="relative"
+        transition="0.3s all"
+        bg={colorMode === 'dark' ? 'gray.700' : 'white'}
+      >
+        <IconButton
+          as={Link}
+          to="/"
+          bottom="20px"
+          right="20px"
+          icon={<ArrowBackIcon />}
+          zIndex="999"
+          aria-label="Home"
+          size="md"
+          colorScheme="teal"
+          mt={4}
+          position="fixed"
+        />
 
-      </div>
-    </div>
+        <Heading as="h1" mb={4}>
+          {isLogin ? 'Login' : 'Sign Up'}
+        </Heading>
+
+        <form onSubmit={handleSubmit}>
+          {!isLogin && (
+            <>
+              <FormControl isRequired>
+                <FormLabel>First Name</FormLabel>
+                <Input
+                  type="text"
+                  name="firstName"
+                  value={formData.firstName}
+                  onChange={handleChange}
+                  placeholder="John"
+                />
+              </FormControl>
+
+              <FormControl isRequired mt={4}>
+                <FormLabel>Last Name</FormLabel>
+                <Input
+                  type="text"
+                  name="lastName"
+                  value={formData.lastName}
+                  onChange={handleChange}
+                  placeholder="Doe"
+                />
+              </FormControl>
+            </>
+          )}
+
+          <FormControl isRequired mt={4}>
+            <FormLabel>University Email</FormLabel>
+            <Input
+              type="email"
+              name="universityEmail"
+              value={formData.universityEmail}
+              onChange={handleChange}
+              placeholder="john.doe@example.edu"
+            />
+          </FormControl>
+
+          <FormControl mt={4}>
+            <FormLabel>Phone Number</FormLabel>
+            <Input
+              type="tel"
+              name="phoneNumber"
+              value={formData.phoneNumber}
+              onChange={handleChange}
+              placeholder="(Optional)"
+            />
+          </FormControl>
+
+          <FormControl isRequired mt={4}>
+            <FormLabel>Password</FormLabel>
+            <Input
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="********"
+              minLength="8"
+              pattern="^(?=.*[A-Z]).{8,}$"
+            />
+            <Text fontSize="sm" color="gray.500" mt={1}>
+              Password must be at least 8 characters long and contain one uppercase letter.
+            </Text>
+          </FormControl>
+
+          <Button
+            type="submit"
+            colorScheme="blue"
+            mt={6}
+            width="100%"
+          >
+            {isLogin ? 'Login' : 'Sign Up'}
+          </Button>
+        </form>
+
+        <Text mt={4}>
+          {isLogin
+            ? "Don't have an account? "
+            : 'Already have an account? '}
+          <Link to="#" onClick={() => setIsLogin(!isLogin)} color="teal.500">
+            {isLogin ? 'Sign Up' : 'Login'}
+          </Link>
+        </Text>
+      </Container>
+    </Box>
   );
 }
 
