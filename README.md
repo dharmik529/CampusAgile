@@ -1,4 +1,4 @@
-# CampusAgile (Jira Clone)
+# CampusAgile (Inspired By Jira)
 
 Members : 
 - Dharmik Patel
