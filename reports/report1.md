@@ -23,7 +23,7 @@
 - Research possible ways to improve the current live build of Jira
 - Longer term goal: Complete implementation of core methods by end of month
 
-##**2. Contributions of individual team members.**
+## **2. Contributions of individual team members.**
 
 ### Dharmik Patel
 
