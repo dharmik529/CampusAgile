@@ -1,9 +1,18 @@
 # CampusAgile (Inspired By Jira)
 
-Members: 
+Members : 
 - Dharmik Patel
 - Dev Patel
 - Love Patel
 - Deep Patel
-- Darsh Patel
 - Dravya Patel
+- Darsh Patel
+
+# Overview
+
+# Guidelines/Instructions
+
+# Contents
+
+# Examples
+
