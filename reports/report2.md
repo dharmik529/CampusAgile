@@ -12,10 +12,12 @@
 - Longer term goal: Complete implementation of core methods by end of month
 
 #### Progress and Issues
-- 
-
+- Setup Postman for API testing
+- Created Figma Designs for the frontend
+- Fixed the issue where the server was not connecting to the database
 #### Goals for Next Week
-- 
+- Design dashboard that will contain Scrum Board, Kanban Board, etc
+- Implement schemas into nest.js
 
 ## **2. Contributions of individual team members.**
 
@@ -28,10 +30,12 @@
 - Collaborate with the backend team to help with schema
 
 #### Progress and Issues
-- 
+- Setup Postman for API testing
+- Finished the living document
+- Collaborated with the backend team to help with schema
 
 #### Goals for Next Week
-- 
+- Implement schemas into nest.js
 
 ### Love Patel
 
@@ -40,10 +44,10 @@
 - Collaborate with the backend team to help with schema
 
 #### Progress and Issues
-- 
-
+- fixed user module/service/controller
+- created the dto, entity, controller, and service files for the issue and project
 #### Goals for Next Week
-- 
+- Start listing out the possible endpoints for the backend
 
 ### Dev Patel
 
@@ -52,10 +56,12 @@
 - Collaborate with the backend team to help with schema
 
 #### Progress and Issues
-- 
+- Ran into issues with postgres server
+- Updated relational schema updates in the entities files
+- Fixed the issue where the server was not connecting to the database
 
 #### Goals for Next Week
-- 
+- Start working on the backend components such as user authentication
 
 ### Deep Patel
 
@@ -64,10 +70,12 @@
 - Collaborate with the backend team to help with components
 
 #### Progress and Issues
-- 
+- Created Figma Designs for the frontend
+- Created a login page for the website and communicated with the backend team to help with components
 
 #### Goals for Next Week
-- 
+- Design dashboard that will contain Scrum Board, Kanban Board, etc.
+- Work on user authentication
 
 ### Darsh Patel
 
@@ -77,10 +85,12 @@
 - Learn Git
 
 #### Progress and Issues
-- 
+- Learned Git(finally)
+- Worked on setting up the frontend for user authentication
 
 #### Goals for Next Week
-- 
+- Turning Figma Designs given by Deep into React Components and Typescript Code
+- Implement a navbar for the dashboard according to Figma designs
 
 ### Dravya Patel
 
@@ -89,7 +99,8 @@
 - Learn Git
 
 #### Progress and Issues
-- 
+- Learned Git(finally)
+- Listed and documeneted all the potential components needed for the frontend
 
 #### Goals for Next Week
-- 
+- Integrate ChakraUI and React into the frontend
