@@ -32,7 +32,6 @@
 #### Progress and Issues
 - Setup Postman for API testing
 - Finished the living document
-- Collaborated with the backend team to help with schema
 
 #### Goals for Next Week
 - Implement schemas into nest.js
@@ -46,8 +45,9 @@
 #### Progress and Issues
 - fixed user module/service/controller
 - created the dto, entity, controller, and service files for the issue and project
+
 #### Goals for Next Week
-- Start listing out the possible endpoints for the backend
+- Start listing out the possible endpoints for the backend API calls
 
 ### Dev Patel
 
