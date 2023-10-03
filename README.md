@@ -269,7 +269,7 @@
  - ``` git pull --all ```
  - ``` cd api ```
  - ``` rm -rf node_modules/ ```
- - ``` pm2 stop campusagileapi ```
  - ``` npm install -omit=optional ```
  - ``` nest build ```
- - ``` pm2 start campusagileapi ```
+ - ``` pm2 restart campusagileapi ```
+ - ``` systemctl restart nginx```
