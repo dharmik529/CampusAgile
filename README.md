@@ -262,3 +262,10 @@
 2. Scope Creep: Expanding project scope beyond the defined requirements can lead to delays. We will closely monitor project scope and prioritize features based on their impact and feasibility.
 3. Resource Limitations: Limited availability of team members or access to necessary resources may affect project timelines. We will mitigate this by allocating tasks effectively and having contingency plans in place.
  **External Feedback:** External feedback will be most valuable during the MVP development and testing phases. We plan to seek feedback from professors, industry experts, and potential end-users to refine our platform. This feedback will help us identify usability issues, performance bottlenecks, and areas for improvement before the final release. We will gather feedback through surveys, user testing sessions, and expert reviews, incorporating valuable insights into our development process.
+
+## Steps to Run
+
+## Commands in CronJob for dev environment
+ - ``` git pull --all```
+ - ``` npm install -omit=optional```
+ - ``` nest build```
