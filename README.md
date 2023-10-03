@@ -266,6 +266,10 @@
 ## Steps to Run
 
 ## Commands in CronJob for dev environment
- - ``` git pull --all```
- - ``` npm install -omit=optional```
- - ``` nest build```
+ - ``` git pull --all ```
+ - ``` cd api ```
+ - ``` rm -rf node_modules/ ```
+ - ``` pm2 stop campusagileapi ```
+ - ``` npm install -omit=optional ```
+ - ``` nest build ```
+ - ``` pm2 start campusagileapi ```
