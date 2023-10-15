@@ -273,3 +273,276 @@
  - ``` nest build ```
  - ``` pm2 restart campusagileapi ```
  - ``` systemctl restart nginx```
+
+# Software Arch
+
+**Part 1: Overview of CampusAgile Software Architecture:**
+
+CampusAgile is designed to provide students with a collaborative platform to gain real-world experience with agile methodologies, using Kanban boards and Scrum notes for organization. The software aims to facilitate teamwork, project management, and learning through interactive features. The major software components and their functionality are as follows:
+
+- **Frontend**: Developed using HTML5, CSS, React, Typescript, and Chakra UI, the frontend is responsible for the user interface. It provides the user with the ability to access and interact with the various features of CampusAgile. Functionality includes user authentication, displaying Kanban boards, creating and managing Scrum notes, and interacting with the AI chatbot.
+- **Backend**: Built using Nest.js, Express.js, and Typescript, the backend serves as the core of the application. It handles user authentication, manages project data, and communicates with the frontend. Key responsibilities include routing requests from the frontend, managing user data, storing and retrieving project-related information, and interacting with external services (if necessary).
+- **Kanban Board Component**: This component allows students to create, manage, and collaborate on Kanban boards for their projects. It enables drag-and-drop functionality for cards, tracks the progress of tasks, and provides a visual representation of project status.
+- **Scrum Notes Component**: Students can create, edit, and organize Scrum notes within this component. It provides a structured way to plan, execute, and review project tasks according to Scrum principles.
+- **AI Chatbot (Optional)**: The AI chatbot, if implemented, would automate manual tasks and provide assistance to students. It could answer questions, generate reports, and help with project management. The AI component would use natural language processing (NLP) and machine learning algorithms to provide intelligent responses.
+
+**Interfaces Between Components:**
+
+- **Frontend to Backend**: The frontend communicates with the backend through API endpoints. This includes user authentication, project creation, updating Kanban boards, and managing Scrum notes.
+- **Kanban Board Component to Backend**: The Kanban board component communicates with the backend to retrieve and update project data, such as task status and card placement.
+- **Scrum Notes Component to Backend**: The Scrum notes component interacts with the backend to store and retrieve Scrum-related data, including sprint planning and task tracking.
+- **AI Chatbot to Backend (Optional)**: If the AI chatbot is implemented, it communicates with the backend to access project data, answer user queries, and perform automated tasks.
+
+**Data Storage and Organization:**
+
+The data in CampusAgile is organized as follows:
+
+- **User Data**: User profiles, authentication information, and roles are stored securely in a database.
+- **Project Data**: Information about projects, including Kanban boards, Scrum notes, and associated files, is stored in a structured format in the database.
+- **Kanban Cards and Task Data**: Individual task data within Kanban boards is stored in a way that allows tracking of task status and card placement.
+- **Scrum Notes and Sprint Data**: Scrum notes and sprint-related data are organized to facilitate sprint planning, execution, and review.
+- **Chatbot Interaction Data (Optional)**: If the AI chatbot is implemented, data related to user interactions and chatbot responses may be stored for analysis and improvement.
+
+**Assumptions:**
+
+- **Internet Connectivity**: It is assumed that users have consistent internet access to use CampusAgile as a web-based platform.
+- **Security and Privacy**: Security measures are in place to protect user data and ensure privacy compliance with relevant regulations.
+**Alternative Software Architecture Decisions:**
+
+**Alternative 1 - Monolithic Architecture vs. Microservices**:
+
+- *Monolithic Architecture*: A single, integrated application with all features and components.
+    - Pros: Simplicity in development and deployment.
+    - Cons: Scalability and maintenance challenges as the system grows.
+- *Microservices Architecture*: Breaking down the system into small, independent services.
+    - Pros: Scalability, flexibility, and easier maintenance of individual components.
+    - Cons: Increased complexity in managing multiple services.
+
+**Alternative 2 - AI Chatbot Integration vs. No AI (Continued):**
+
+- *AI Chatbot Integration*: Implementing an AI chatbot to automate tasks.
+    - Pros: Enhanced user experience, reduced manual work, and potential for intelligent assistance.
+    - Cons: Development complexity, potential for errors in AI responses, and additional resource requirements.
+- *No AI Chatbot*: Omitting the AI chatbot and relying solely on manual user interactions.
+    - Pros: Simplified development, lower resource requirements.
+    - Cons: Increased manual work for users, potentially reduced user engagement.
+
+The choice between these alternatives depends on the team's capacity, user requirements, and the overall project scope. Implementing an AI chatbot can significantly enhance the user experience, but it requires additional development effort and maintenance. On the other hand, not implementing the AI chatbot may simplify development and reduce resource requirements but could result in a less automated and potentially less engaging user experience.
+
+**Part 2: Software Design** 
+
+1. **Frontend Component**:
+    - **Packages/Classes/Units of Abstraction**:
+        - **`AuthenticationService`**: Responsible for user login and registration.
+        - **`KanbanBoardComponent`**: Displays and manages Kanban boards.
+        - **`ScrumNotesComponent`**: Manages Scrum notes and sprint planning.
+        - **`AIChatbotComponent`** (if implemented): Handles AI chatbot interactions.
+    - **Responsibilities**:
+        - **`AuthenticationService`**: Validates user credentials, manages user sessions, and provides authentication-related functionality.
+        - **`KanbanBoardComponent`**: Renders Kanban boards, allows card creation and movement, updates card statuses.
+        - **`ScrumNotesComponent`**: Provides a user interface for creating, editing, and organizing Scrum notes, tracks sprint progress.
+        - **`AIChatbotComponent`** (if implemented): Handles user queries, performs automated tasks, and interacts with external AI services.
+2. **Backend Component**:
+    - **Packages/Classes/Units of Abstraction**:
+        - **`UserAPI`**: Handles user-related HTTP requests (e.g., registration, login).
+        - **`ProjectAPI`**: Manages project data (e.g., creation, retrieval) and interfaces with the database.
+        - **`KanbanBoardService`**: Contains business logic for Kanban board operations.
+        - **`ScrumNotesService`**: Contains business logic for Scrum notes management.
+        - **`AIChatbotService`** (if implemented): Orchestrates AI chatbot interactions and external service integration.
+    - **Responsibilities**:
+        - **`UserAPI`**: Validates and processes user registration and login requests, manages user data.
+        - **`ProjectAPI`**: Receives and responds to requests related to project creation, retrieval, and updates.
+        - **`KanbanBoardService`**: Contains logic for Kanban card movements, status updates, and data retrieval.
+        - **`ScrumNotesService`**: Handles CRUD operations for Scrum notes, sprint planning, and task tracking.
+        - **`AIChatbotService`** (if implemented): Orchestrates AI chatbot interactions, sends queries to AI services, and processes responses.
+3. **Kanban Board Component**:
+    - **Packages/Classes/Units of Abstraction**:
+        - **`KanbanBoard`**: Represents a Kanban board, including cards and columns.
+        - **`KanbanCard`**: Represents individual task cards on the board.
+        - **`KanbanColumn`**: Represents columns on the board (e.g., "To Do," "In Progress," "Done").
+    - **Responsibilities**:
+        - **`KanbanBoard`**: Manages the overall structure of the board, including columns and cards.
+        - **`KanbanCard`**: Contains data and metadata for individual tasks, including their status.
+        - **`KanbanColumn`**: Represents and manages columns on the board, including adding/removing cards.
+4. **Scrum Notes Component**:
+    - **Packages/Classes/Units of Abstraction**:
+        - **`ScrumNote`**: Represents an individual Scrum note.
+        - **`Sprint`**: Represents a Scrum sprint, containing multiple Scrum notes.
+        - **`SprintPlanning`**: Handles sprint planning and tracking.
+    - **Responsibilities**:
+        - **`ScrumNote`**: Stores data and metadata for individual Scrum notes, including their content and status.
+        - **`Sprint`**: Organizes Scrum notes into sprints, tracks sprint progress.
+        - **`SprintPlanning`**: Facilitates sprint planning meetings, assigns tasks, and monitors sprint progress.
+5. **AI Chatbot Component (Optional)**:
+    - **Packages/Classes/Units of Abstraction**:
+        - **`Chatbot`**: Represents the AI chatbot and its interactions.
+        - **`NLPProcessor`**: Handles natural language processing tasks.
+        - **`ExternalServiceConnector`**: Interfaces with external AI services (if used).
+    - **Responsibilities**:
+        - **`Chatbot`**: Manages user interactions, processes user queries, and coordinates AI responses.
+        - **`NLPProcessor`**: Performs natural language understanding and generation tasks.
+        - **`ExternalServiceConnector`**: Communicates with external AI services for specialized tasks, such as data analysis or report generation (if applicable).
+
+**Part 3: Coding guideline**
+
+1. **TypeScript**: **[TypeScript Style Guide](https://github.com/basarat/typescript-book/blob/master/docs/styleguide/styleguide.md)**
+    - **Reason for Choice**: TypeScript is a statically typed superset of JavaScript, and following a well-established style guide helps ensure code consistency and maintainability.
+    - **Enforcement**: The team will use linters and code analysis tools like TSLint or ESLint with TypeScript configurations to enforce the coding standards. Code reviews will also be conducted to catch and address violations.
+2. **React (TypeScript)**: **[Airbnb React/JSX Style Guide](https://github.com/airbnb/javascript/tree/master/react)**
+    - **Reason for Choice**: The Airbnb React style guide is widely adopted and provides best practices for writing clean and maintainable React components.
+    - **Enforcement**: ESLint with the Airbnb React/JSX configuration will be used to enforce React-specific coding standards. Code reviews will also be conducted to ensure adherence to the guidelines.
+3. **HTML**: **[Google HTML/CSS Style Guide](https://google.github.io/styleguide/htmlcssguide.html)**
+    - **Reason for Choice**: Google's HTML/CSS Style Guide is comprehensive and provides clear recommendations for writing consistent and accessible HTML.
+    - **Enforcement**: HTML linters like HTMLHint or HTMLLint can be integrated into the development workflow to enforce HTML coding standards. Code reviews will also play a role in maintaining consistency.
+4. **Chakra UI**: [Chakra-ui](https://chakra-ui.com)
+    - **Reason for Choice**: Chakra UI provides a set of accessible and customizable UI components that can help maintain consistency in the user interface.
+    - **Enforcement**: Since Chakra UI components are used within React and TypeScript, adherence to React and TypeScript style guides will naturally ensure consistency when working with Chakra UI.
+5. **Nest.js**: **[Nest.js Official Documentation](https://nestjs.com/)**
+    - **Reason for Choice**: The official Nest.js documentation provides comprehensive guidance and best practices for building and deploying applications using Nest.js.
+    - **Enforcement**: The team will closely follow the Nest.js documentation and recommended practices, ensuring that the development process adheres to best practices. Code reviews will play a significant role in ensuring the adoption of these practices throughout the project.
+6. **PostgreSQL**: **[SQL Style Guide](https://www.sqlstyle.guide/)**
+    - **Reason for Choice**: The SQL Style Guide provides guidelines for writing clear and maintainable SQL queries, which is essential for working with PostgreSQL.
+    - **Enforcement**: SQL queries will be reviewed as part of the database schema design and data access layer. Code reviews will be conducted to ensure SQL queries adhere to the style guide and are optimized for performance.
+
+**Part 4: Process description**
+
+**Risk Assessment:**
+
+1. **Technical Complexity Risk**
+    - Likelihood: Medium
+    - Impact: High
+    - Evidence: The project involves integrating multiple technologies (TypeScript, React, Next.js, Chakra UI, PostgreSQL, and potentially an AI chatbot), which can lead to technical challenges.
+    - Steps to Reduce:
+        - Conduct thorough technology research and prototyping.
+        - Regularly assess the team's technical skills and provide training if necessary.
+    - Detection Plan: Monitor development progress and identify technical challenges early.
+    - Mitigation: Seek external expert consultation if significant technical challenges arise.
+2. **Scope Creep Risk**
+    - Likelihood: Medium
+    - Impact: High
+    - Evidence: Scope changes and feature additions are common in software projects, potentially affecting the project timeline.
+    - Steps to Reduce:
+        - Maintain clear project requirements and a change control process.
+        - Educate stakeholders about the impact of scope changes.
+    - Detection Plan: Regularly review project requirements and scope.
+    - Mitigation: Analyze the impact of scope changes and negotiate priorities with stakeholders.
+3. **Resource Availability Risk**
+    - Likelihood: Medium
+    - Impact: Medium
+    - Evidence: Team member availability may fluctuate due to external commitments or unforeseen circumstances.
+    - Steps to Reduce:
+        - Maintain open communication about availability and commitments.
+        - Cross-train team members to mitigate skill-specific availability risks.
+    - Detection Plan: Regularly update and review team availability.
+    - Mitigation: Adjust work allocation and seek temporary resources if needed.
+4. **Integration Risk**
+    - Likelihood: Medium
+    - Impact: Medium
+    - Evidence: Integrating various components and technologies can lead to compatibility and communication issues.
+    - Steps to Reduce:
+        - Plan for integration early and conduct regular testing.
+        - Use standardized interfaces and communication protocols.
+    - Detection Plan: Integrate components incrementally and perform thorough testing.
+    - Mitigation: Develop contingency plans for integration issues.
+5. **Data Security and Privacy Risk**
+    - Likelihood: Low
+    - Impact: High
+    - Evidence: Handling user data and potential AI chatbot interactions requires a strong focus on security and privacy.
+    - Steps to Reduce:
+        - Implement robust security measures, including encryption and access controls.
+        - Stay updated with data protection regulations (e.g., GDPR) and adhere to best practices.
+    - Detection Plan: Regularly review and assess security measures.
+    - Mitigation: Respond promptly to security incidents and comply with relevant regulations.
+
+**Changes Since Requirements Document Submission:**
+The risk assessment section has been expanded to include a discussion of the top five risks, their likelihood, impact, evidence, steps to reduce the likelihood or impact, detection plans, and mitigation plans.
+
+**Project Schedule:**
+
+**Milestones:**
+
+1. Project Planning & Architecture Design
+2. Frontend Development (UI and User Authentication)
+3. Backend Development (APIs, Database)
+4. Kanban Board Component Development
+5. Scrum Notes Component Development
+6. AI Chatbot Integration (if applicable)
+7. Integration and Testing
+8. User Acceptance Testing
+9. Documentation and Guides
+10. Deployment and Release
+
+**Tasks and Dependencies:**
+Tasks are organized within each milestone, and dependencies between tasks are indicated.
+
+- *Project Planning & Architecture Design*
+    - Define Project Requirements
+    - Create Software Architecture
+    - Choose Coding Style Guidelines
+    - **Dependencies**: None
+- *Frontend Development*
+    - User Interface Design
+    - User Authentication Implementation
+    - Implement Kanban Board UI
+    - Implement Scrum Notes UI
+    - **Dependencies**: Architecture Design
+- *Backend Development*
+    - User Authentication API
+    - Project Data API
+    - Database Schema Implementation
+    - **Dependencies**: Architecture Design
+- *Kanban Board Component Development*
+    - Card Management Logic
+    - Drag-and-Drop Functionality
+    - Card Status Updates
+    - **Dependencies**: Frontend Development
+- *Scrum Notes Component Development*
+    - Scrum Note CRUD Operations
+    - Sprint Management Logic
+    - Sprint Planning UI
+    - **Dependencies**: Frontend Development, Backend Development
+- *AI Chatbot Integration (if applicable)*
+    - Chatbot Interface Implementation
+    - NLP Integration
+    - External Service Integration
+    - **Dependencies**: Frontend Development, Backend Development
+- *Integration and Testing*
+    - API Integration
+    - Component Integration
+    - Compatibility Testing
+    - **Dependencies**: Frontend Development, Backend Development, Kanban Board Component Development, Scrum Notes Component Development, AI Chatbot Integration (if applicable)
+- *User Acceptance Testing*
+    - User Testing and Feedback
+    - Bug Fixes and Improvements
+    - **Dependencies**: Integration and Testing
+- *Documentation and Guides*
+    - User Guides
+    - Admin Guides
+    - Developer Guides
+    - **Dependencies**: Integration and Testing
+- *Deployment and Release*
+    - Final Testing and Quality Assurance
+    - Deployment to Production
+    - Release to Users
+    - **Dependencies**: User Acceptance Testing, Documentation and Guides
+
+**Team Structure:**
+The team consists of six members with the following roles and responsibilities:
+
+- **Project Manager**: Overall project planning, coordination, and risk management.
+- **Frontend Developer**: UI design and development, user authentication.
+- **Backend Developer**: API development, database management.
+- **Kanban Board Component Developer**: Kanban board feature development.
+- **Scrum Notes Component Developer**: Scrum notes feature development.
+- **AI Chatbot Developer (if applicable)**: Chatbot integration and AI development.
+
+**Documentation Plan:**
+
+- User Guides: Detailed instructions for using the Campus Agile platform, including Kanban boards, Scrum notes, and AI chatbot (if applicable).
+- Admin Guides: Guides for administrators to manage user accounts, project settings, and data.
+- Developer Guides: Technical documentation for future maintenance and extensions of the system.
+- Man Pages: Command-line utility documentation (if applicable).
+- Help Menus: In-app help and tooltips for users.
+- Wiki: Collaborative documentation for internal use and community support (if applicable).
+
+Documentation will be developed incrementally alongside the software components. The team will allocate specific responsibilities for creating and maintaining documentation, ensuring that it remains up to date as the project progresses.
