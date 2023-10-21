@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "chatbot"
+version = "0.1.0"
+description = ""
+authors = ["dharmikpatel <dharmik529@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python =">=3.11,<3.12" 
+torch = "^2.1.0"
+flask = "^3.0.0"
+numpy = "^1.26.1"
+spacy = "^3.7.2"
+classy-classification = "^0.6.7"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
