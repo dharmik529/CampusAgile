@@ -13,3 +13,5 @@
 **/dist
 **/npm-debug.log*
 
+# rust
+**/Cargo.lock
