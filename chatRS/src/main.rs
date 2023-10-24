@@ -1,7 +1,8 @@
 extern crate rust_stemmers;
-extern crate rust_bert;
+extern crate natural;
 
 use rust_stemmers::{ Algorithm, Stemmer };
+use natural::classifier::NaiveBayesClassifier;
 
 fn main() {
 
@@ -13,17 +14,15 @@ fn main() {
     // assert_eq!(en_stemmer.stem("fruitlessly"), "fruitless");
     println!("{}", en_stemmer.stem("fruitlessly"));
 
-    let sequence_classification_model = ZeroShotClassificationModel::new(Default::default())?;
+    let mut nbc = NaiveBayesClassifier::new();
 
-    let input_sentence = "Who are you voting for in 2020?";
-    let input_sequence_2 = "The prime minister has announced a stimulus package which was widely criticized by the opposition.";
-    let candidate_labels = &["politics", "public health", "economics", "sports"];
+    nbc.train("This text is about chairs.", "Furniture");
+    nbc.train("Couches, benches and televisions.", "Furniture");
+    nbc.train("I really need to get a new sofa.", "Furniture");
+    nbc.train("There also exist things like fridges.", "Kitchen");
+    nbc.train("I hope to be getting a new stove today.", "Kitchen");
+    nbc.train("Do you also have some ovens.", "Kitchen");
 
-    let output = sequence_classification_model.predict_multilabel(
-        &[input_sentence, input_sequence_2],
-        candidate_labels,
-        None,
-        128,
-    );
+    println!("{}", nbc.guess("I am looking for kitchen appliances.")); //returns a label with the highest probability
 
 }
