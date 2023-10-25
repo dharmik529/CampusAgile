@@ -1,4 +1,4 @@
-name: tch-rs-demo
+name: chatRS
 channels:
   - pytorch
   - conda-forge
