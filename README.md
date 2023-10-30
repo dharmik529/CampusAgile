@@ -549,15 +549,12 @@ Documentation will be developed incrementally alongside the software components.
 
 # Test Automation Infrastructure
 
-- Testing Framework: Jasmine
-- Test Runner: Jest
+- Testing Framework: Postman
 - Continuous Integration (CI) Service: Travis CI 
 
 **Justification for Test Automation Infrastructure:**
 
-1. Jasmine: Jasmine is a behavior-driven development (BDD) framework for testing JavaScript code. It provides a clean and readable syntax for writing tests, making it easier for developers to express the expected behavior of their code. Jasmine is well-suited for NestJS, which is a TypeScript-based framework for building Node.js applications
-
-2. Jest: Jest is a widely used test runner and assertion library that works seamlessly with TypeScript. It is known for its speed and ease of use. Jest is maintained by Facebook and is the default choice for testing in many JavaScript projects. It has excellent TypeScript support, which is essential for NestJS. It is also built-into NestJS.
+1. Postman: Postman is a popular tool for testing APIs. It offers a user-friendly interface for creating and running API tests, making it suitable for testing the API endpoints of a NestJS application. Postman also provides the ability to automate tests, making it a good choice for API testing.
 
 **Adding a New Test to the Code Base:**
 
