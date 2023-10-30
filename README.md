@@ -546,3 +546,70 @@ The team consists of six members with the following roles and responsibilities:
 - Wiki: Collaborative documentation for internal use and community support (if applicable).
 
 Documentation will be developed incrementally alongside the software components. The team will allocate specific responsibilities for creating and maintaining documentation, ensuring that it remains up to date as the project progresses.
+
+# Test Automation Infrastructure
+
+- Testing Framework: Jasmine
+- Test Runner: Jest
+- Continuous Integration (CI) Service: Travis CI 
+
+**Justification for Test Automation Infrastructure:**
+
+1. Jasmine: Jasmine is a behavior-driven development (BDD) framework for testing JavaScript code. It provides a clean and readable syntax for writing tests, making it easier for developers to express the expected behavior of their code. Jasmine is well-suited for NestJS, which is a TypeScript-based framework for building Node.js applications
+
+2. Jest: Jest is a widely used test runner and assertion library that works seamlessly with TypeScript. It is known for its speed and ease of use. Jest is maintained by Facebook and is the default choice for testing in many JavaScript projects. It has excellent TypeScript support, which is essential for NestJS. It is also built-into NestJS.
+
+**Adding a New Test to the Code Base:**
+
+To add a new test to the code base, follow these steps:
+
+1. Create a new test file with a **.spec.ts** extension in the same directory as the module or component you want to test.
+
+2. Write your test cases using the Jasmine framework's syntax to describe the behavior of the code.
+
+3. Use Jest's `describe` and it functions to structure and write your tests.
+
+4. Run the tests using the `npm test` command, which is configured to use Jest.
+
+CI Service and Repository Link:
+
+- CI Service: Travis CI 
+- GitHub repository is linked to Travis CI, and Travis CI is triggered on every push to the GitHub repository.
+
+Justification for Travis CI:
+
+Travis CI is chosen for its ease of use, excellent integration with GitHub, and robust support for Node.js projects. It offers both free and paid plans, making it accessible to both open-source and commercial projects. It also provides excellent documentation and a wide range of build environments and deployment options.
+
+Pros/Cons Matrix for CI Services:
+
+1. Travis CI:
+    Pros: 
+        - Seamless integration with GitHub.
+        - Supports a wide range of programming languages, including TypeScript and Node.js.
+        - Free tier available for open-source projects.
+        - Easy configuration via a `.travis.yml` file.
+        - Fast build times 
+    Cons:
+        - Limited concurrency on free plan
+        - Limited customization options compared to some other CI services.
+
+2. CircleCI:
+    Pro: 
+        - High degree of customization.
+        - Support for Docker containers, which is useful for more complex build setups.
+        - Strong parallelism support for faster builds.
+        - Scalable for larger projects.
+    Cons:
+        - Learning curve due to the high level of customization.
+        - Costly for large-scale commercial projects.
+
+**Tests Executed in CI Build**
+
+All unit tests, integration tests, and end-to-end tests will be executed in the CI build to ensure the integrity and quality of the codebase.
+
+**Development Actions Triggering CI Build:**
+The CI build will be triggered by the following development actions:
+
+1. Push to the main repository branch.
+2. Pull requests opened against the main repository branch.
+3. Branch merges or pull request merges into the main branch.
