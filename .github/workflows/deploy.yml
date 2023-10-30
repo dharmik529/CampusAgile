@@ -18,4 +18,4 @@ jobs:
         port: 22
         script: |
           cd /root
-          bash rebootAgile
+          bash /root/rebootAgile.sh
