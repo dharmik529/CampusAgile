@@ -2,12 +2,7 @@ name: Deployment
 
 on: 
   push:
-    branches: [ main ]
-
-  workflow_run:
-    workflows: ["Tests"]
-    types:
-      - completed
+    branches: [ backend ]
 
 jobs:
   build:
