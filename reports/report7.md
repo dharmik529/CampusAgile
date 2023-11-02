@@ -32,10 +32,12 @@
 
 #### Progress and Issues
 - Finished setting up a CI pipeline using Github Actions
-
+- Started working on making training data for the chatbot
 
 #### Goals for Next Week
-- 
+- Need to finish the training data
+- Need to look in to oobagooba for text generation
+- Waiting on api to finish all endpoints
 
 ### Love Patel
 
