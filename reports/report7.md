@@ -18,7 +18,6 @@
 
 
 ## **2. Contributions of individual team members.**
-#
 ### Dharmik Patel
 
 #### Goals from last week
@@ -95,9 +94,11 @@
 - Begin tackling other tasks from the dashboard, like documentation, policies, and community pages.
 
 #### Progress and Issues
-- 
+- Completed working on the scrum board. Tested functionality of each component under scrum board.
+- Started working on other task: Documentation and Policies page.
 
 #### Goals for Next Week
-- 
+- Conclude the tasks associated with the dashboard, including finalizing the community pages, policies, and documentation.
+- Additionally, ensure the completion of any other assignments assigned by the team leader and actively assist the team in establishing connections with the backend.
 
 #
