@@ -570,12 +570,12 @@ To add a new test to the code base, follow these steps:
 
 CI Service and Repository Link:
 
-- CI Service: Travis CI 
-- GitHub repository is linked to Travis CI, and Travis CI is triggered on every push to the GitHub repository.
+- CI Service: Github actions 
+- GitHub repository is linked to workflows, and workflow is triggered on every push to the GitHub repository.
 
 Justification for Travis CI:
 
-Travis CI is chosen for its ease of use, excellent integration with GitHub, and robust support for Node.js projects. It offers both free and paid plans, making it accessible to both open-source and commercial projects. It also provides excellent documentation and a wide range of build environments and deployment options.
+We chose Github Actions because it can ssh into my vps and run a script to pull and redeploy
 
 Pros/Cons Matrix for CI Services:
 
