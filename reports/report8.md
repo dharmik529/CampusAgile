@@ -3,8 +3,8 @@
 ## **1. Agenda and Status**
 
 #### Agenda
--
-- 
+- Discuss backend progress made to endpoints and testing.
+- Talk to dharmik about progress on chatbot 
 
 #### Goals from Last Week
 - One month left, so we need to start wrapping up the project. We need to start working on the documentation and the presentation.
@@ -33,7 +33,13 @@
 
 #### Progress and Issues
 
+- Still working on training data
+- Did research on other text generation libraries
+
 #### Goals for Next Week
+- Need to finish the training data
+- Experiment and refine text generation
+- Link the database and backend api
 
 ### Love Patel
 
