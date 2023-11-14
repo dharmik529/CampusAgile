@@ -12,7 +12,7 @@
      <img src="https://github.com/devv64Bit.png?size=50">
    </a>
    <a href="https://github.com/love-p">
-     <img src="https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/363489661_509371608041059_9183580639503429527_n.jpg">
+     <img src="https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/363489661_509371608041059_9183580639503429527_n.jpg?size=50">
    </a>
    <a href="https://github.com/deep4gb">
      <img src="https://github.com/deep4gb.png?size=50">
