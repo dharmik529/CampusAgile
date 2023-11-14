@@ -1,113 +1,27 @@
-<h2 align="center"> ━━━━━━  ❖  ━━━━━━ </h2>
-<h1 align="center"> CAMPUS AGILE </h1>
+| **CAMPUS AGILE** CMPSC 487W: INTRO TO SOFTWARE ENG **Empowering university students with real-world project management experience through an agile task and collaboration platform"** | **Group Members** Dharmik Patel **Deep Patel** Dravya Patel **Dev Patel** Darsh Patel **Love Patel** |
+| --- | --- |
 
-<!-- BADGES -->
-<div align="center">
-   <p></p>
-   
-   <a href="https://github.com/dharmik529">
-     <img src="https://github.com/dharmik529.png?size=50">
-   </a>
-   <a href="https://github.com/devv64bit">
-     <img src="https://github.com/devv64Bit.png?size=50">
-   </a>
-   <a href="https://github.com/love-p">
-     <img src="https://github.com/love-p.png?size=50">
-   </a>
-   <a href="https://github.com/deep4gb">
-     <img src="https://github.com/deep4gb.png?size=50">
-   </a>
-   <a href="https://github.com/darsh8692">
-     <img src="https://github.com/darsh8692.png?size=50">
-   </a>
-   <a href="https://github.com/dravyaaa">
-     <img src="https://github.com/dravyaaa.png?size=50">
-   </a>
-   <br>
-</div>
-
-- Dharmik Patel (Scrum Master & AI Engineer)
+**Team Info & Policies:**  **Our team and roles:**
 - Deep Patel (Front-end Lead)
 - Dravya & Darshit Patel (Front-end Developers)
+- Dharmik Patel (Back-end Lead & Scrum Master)
 - Dev & Love Patel (Back-end Developers)
 
----
+**Git Repository:** 
+- We have set up a private GitHub repository for our project, accessible at [GitHub Repository Link](https://github.com/dharmik529/CampusAgile). The repository serves as our version control system for code collaboration and includes all project-related files.
 
-<!-- SETUP -->
-### ❖ Installation and Setup
+**Communication and Tools:**
+- **Communication Platform:** We utilize Discord for real-time discussions, team meetings, and weekly updates. Discord enables us to maintain effective communication and quick responses among team members.
+- **Version Control:** GitHub is our chosen platform for hosting the project's Git repository. This facilitates code versioning, collaborative development, and code reviews.
+- **Issue and Task Tracking:** Jira Software is our primary tool for tracking project-related issues, tasks, and milestones. Jira helps us organize and manage our project workflow efficiently.
 
-   The following instructions are inteded to be ran in a Linux/Unix Environment
+**Policies:** 
+- We expect all team members to actively participate in Discord discussions and weekly meetings to ensure effective communication.
+- Git push requests to the repository are reviewed and approved by team leads (Deep Patel for front-end and Dharmik Patel for back-end) to maintain code quality and consistency.
+- Task assignments and updates are tracked using Jira Software, ensuring transparency and accountability in project progress.
 
-   <details>
-   <summary><strong>Prerequisites</strong></summary>
-   
-   Our project makes use of some core technologies. Please ensure you have the following installed.
-   <ul>
-    <li> NodeJS >=20.9.0 </li>
-    <li> NPM >=10.1.0 </li>
-    <li> NestJS >=10.2.8 </li>
-   </ul>
 
-   </details>
-
-   <details>
-   <summary><strong>Clone the Repository</strong></summary>
-   
-   This is a private repository, please ensure you are signed in and have git appropriately setup on your local machine.
-   ```bash
-   git clone https://github.com/dharmik529/CampusAgile.git
-   cd CampusAgile
-   ```
-   </details>
-
-   The next 2 instructions should be ran in 2 different termimal sessions. They need to be running concurrently.
-   <details>
-   <summary><strong>Running the api</strong></summary>
-   
-   Open the api folder
-   ```bash
-   cd api
-   ```
-   Install node packages and dependencies
-   ```bash
-   npm install
-   ```
-   Run the nest app (will host to localhost:3000)
-   ```bash
-   nest start
-   ```
-   </details> 
-
-   <details>
-   <summary><strong>Running the client</strong></summary>
-   
-   Open the client folder
-   ```bash
-   cd client
-   ```
-   Install node packages and dependencies
-   ```bash
-   npm install
-   ```
-   Run the react(vite) app (will host to localhost:3001)
-   ```bash
-   npm run dev
-   ```
-   </details> 
-
-   <details>
-   <summary><strong>Viewing the app</strong></summary>
-   
-   Open any web browser and open the following url:
-   [localhost:3001](localhost:3001)
-   </details>  
-
----
-
-<!-- INFORMATION -->
-### ❖ Information 
-
-CampusAgile is a revolutionary platform dedicated to equipping university students with invaluable real-world project management experience. Our mission is to empower the next generation of professionals by providing them with the tools and knowledge needed to excel in an ever-evolving job market. With CampusAgile, students gain access to a collaborative environment that seamlessly integrates agile methodologies, enabling them to break down complex projects, develop adaptability, master time management, and prioritize tasks effectively.
+**Product Description:** CampusAgile is a revolutionary platform dedicated to equipping university students with invaluable real-world project management experience. Our mission is to empower the next generation of professionals by providing them with the tools and knowledge needed to excel in an ever-evolving job market. With CampusAgile, students gain access to a collaborative environment that seamlessly integrates agile methodologies, enabling them to break down complex projects, develop adaptability, master time management, and prioritize tasks effectively.
 
 **Key Features:** 
 - **Agile Task Management:** CampusAgile introduces agile methodologies to students, teaching them how to dissect intricate projects into manageable components. This not only fosters project adaptability but also hones critical skills in time management and task prioritization.
@@ -123,62 +37,10 @@ CampusAgile is a revolutionary platform dedicated to equipping university studen
 - **Mobile Application:** Develop a mobile app for on-the-go access, providing convenience and flexibility.
 - **Integration with Popular Tools:** Integrate CampusAgile with widely-used productivity and collaboration tools to enhance workflow.
 
-CampusAgile aims to be the premier platform for students seeking to bridge the gap between academia and industry, offering an immersive learning experience that prepares them for successful careers.
+**CampusAgile aims to be the premier platform for students seeking to bridge the gap between academia and industry, offering an immersive learning experience that prepares them for successful careers.**
 
----
 
-<!-- TOOLCHAIN -->
-### ❖ Toolchain and Structure
-
-   <details>
-   <summary><strong>Version Control</strong></summary>
-   Git is a distributed version control system widely used in software development. It enables developers to track changes in their codebase, collaborate with others, and manage project history efficiently. Git records a history of all modifications, allowing users to revert to previous states, create branches for parallel development, and merge changes seamlessly. It provides a robust and flexible platform for team collaboration and code management, making it an essential tool for source code version control.
-   </details>
-
-   <details>
-   <summary><strong>Bug Tracking</strong></summary>
-   GitHub issue tracking is a system that allows for the management and tracking of tasks, bug reports, feature requests, and other work items in software development projects. Users can create issues with titles, descriptions, labels, and assign them to team members, as well as categorize and prioritize them with labels. Issues can be organized into milestones, which represent specific releases or project phases. Collaborators can engage in discussions through comments, and issues can be in an open or closed state to signify their status. Users receive notifications for updates, and references between issues and pull requests facilitate cross-referencing. GitHub offers filters and search capabilities for effective issue organization and management. This system enhances project collaboration, transparency, and issue resolution.
-   </details>
-
-   <details>
-   <summary><strong>Build System</strong></summary>
-      <ol>
-         <li>Front-End</li>
-         Vite itself serves as a development server, and it includes a production build system. You can use Vite's built-in build command to generate optimized production bundles. It's a popular choice for React applications due to its speed and developer-friendly features.
-         <li>Back-End</li>
-         The Nest CLI is a command-line interface tool specifically designed for NestJS. It provides commands for generating controllers, modules, and services, and it can help you scaffold a NestJS project structure. While it's not a full build system, it simplifies project setup and code generation.
-      </ol> 
-   </details>
-
-   <details>
-   <summary><strong>Testing and CI</strong></summary>
-      <ol>
-         <li>Postman</li>
-         Postman is a popular tool for testing APIs. It offers a user-friendly interface for creating and running API tests, making it suitable for testing the API endpoints of a NestJS application. Postman also provides the ability to automate tests, making it a good choice for API testing.
-         <li>Github Actions</li>
-         GitHub Actions CI is a cloud-based automation service provided by GitHub, a popular platform for version control and software development. CI refers to the practice of automatically building, testing, and deploying code changes in a consistent and automated manner, typically in response to code commits or pull requests. GitHub Actions CI is designed to help developers streamline and automate their software development workflows.
-      </ol> 
-   </details>
-
----
-
-<!-- TEAM POLICIES -->
-### ❖ Team Policies
-
-**Communication and Tools:**
-- **Communication Platform:** We utilize Discord for real-time discussions, team meetings, and weekly updates. Discord enables us to maintain effective communication and quick responses among team members.
-- **Version Control:** GitHub is our chosen platform for hosting the project's Git repository. This facilitates code versioning, collaborative development, and code reviews.
-- **Issue and Task Tracking:** Jira Software is our primary tool for tracking project-related issues, tasks, and milestones. Jira helps us organize and manage our project workflow efficiently.
-
-**Policies:** 
-- We expect all team members to actively participate in Discord discussions and weekly meetings to ensure effective communication.
-- Git push requests to the repository are reviewed and approved by team leads (Deep Patel for front-end and Dharmik Patel for back-end) to maintain code quality and consistency.
-- Task assignments and updates are tracked using Jira Software, ensuring transparency and accountability in project progress.
-
----
-
-<!-- USE CASES -->
-### ❖ Use Cases
+**Use Cases (Functional Requirements):**
 
 **Use Case 1: User Task Assignment**
 - **Actors:** User (Student or Faculty), System
@@ -347,11 +209,6 @@ CampusAgile aims to be the premier platform for students seeking to bridge the g
 
 1. If the task does not exist or the user is not part of the project, they receive an error message.
 
----
-
-<!-- OTHER REQS -->
-### ❖ Other Requirements
-
 **Non-functional Requirements:**
 -  **Usability:** The platform should have an intuitive user interface to ensure users can easily navigate, collaborate, and manage tasks without extensive training.
 -  **Security:** User data, project information, and communication should be encrypted to protect sensitive information. User authentication and authorization mechanisms must be robust.
@@ -364,57 +221,60 @@ CampusAgile aims to be the premier platform for students seeking to bridge the g
 -  **Buildability:** All components, including clients and servers, should be buildable from source code. Comprehensive documentation should be available for developers to contribute and enhance the system.
 -  **Scope Alignment:** The scope of the project should align with the available team resources, ensuring that tasks and milestones are manageable within the team's capacity.
 
-7
- **Semester-Long Development Process:**
- Software Toolset: For our semester-long development process, we have carefully selected a set of software tools to facilitate efficient and effective development. These tools align with agile methodologies and provide the necessary support for our project.
-
+**Team process description:**  **Semester-Long Development Process:** Software Toolset: For our semester-long development process, we have carefully selected a set of software tools to facilitate efficient and effective development. These tools align with agile methodologies and provide the necessary support for our project:
 1. Front-end Development:
-     - React.js: We will use React.js for building our front-end user interface due to its component-based architecture and high reusability.
-     - TypeScript: TypeScript will be employed to add type safety to our JavaScript code, reducing errors and enhancing maintainability.
-     - HTML/CSS: Standard HTML and CSS will be used for structuring and styling our web pages.
-     - GitHub: We will utilize GitHub for version control, enabling seamless collaboration and code management.
-     - Jira: Jira will serve as our task-tracking tool to manage project tasks, issues, and sprints.
-     - Discord: Discord will be our primary communication platform for team discussions and coordination.
+  - React.js: We will use React.js for building our front-end user interface due to its component-based architecture and high reusability.
+  - TypeScript: TypeScript will be employed to add type safety to our JavaScript code, reducing errors and enhancing maintainability.
+  - HTML/CSS: Standard HTML and CSS will be used for structuring and styling our web pages.
+  - GitHub: We will utilize GitHub for version control, enabling seamless collaboration and code management.
+  - Jira: Jira will serve as our task-tracking tool to manage project tasks, issues, and sprints.
+  - Discord: Discord will be our primary communication platform for team discussions and coordination.
 2. Back-end Development:
-     - Node.js: We have chosen Node.js for our back-end development, as it aligns well with JavaScript used in React, offering a unified development experience.
-     - Database Management: Back-end developers will handle database management, selecting an appropriate database system based on project requirements.
-     - Server Deployment: Deployment of the back-end server will be managed by the back-end lead, ensuring smooth operation.
-
+  - Node.js: We have chosen Node.js for our back-end development, as it aligns well with JavaScript used in React, offering a unified development experience.
+  - Database Management: Back-end developers will handle database management, selecting an appropriate database system based on project requirements.
+  - Server Deployment: Deployment of the back-end server will be managed by the back-end lead, ensuring smooth operation.
  **Team Member Roles:** 
-   - Deep Patel (Front-end Lead): Deep will be responsible for leading the front-end development efforts. His role includes defining the front-end architecture, establishing a cohesive design and color palette, and assigning tasks to front-end developers. Deep's experience in front-end development makes him well-suited for this role.
-   - Dravya & Darshit Patel (Front-end Developers): Dravya and Darshit will work closely with the front-end lead to implement front-end components based on the provided design and requirements. Their responsibilities include coding, testing, and ensuring a seamless user experience.
-   - Dharmik Patel (Back-end Lead): Dharmik will take charge of the back-end development, overseeing the server-side architecture, database management, and server deployment. His experience in back-end development and NLP makes him the ideal candidate for this role.
-   - Dev & Love Patel (Back-end Developers): Dev and Love will collaborate with the back-end lead to develop server-side functionalities and integrate the database. They will work on implementing the logic necessary for the platform's core functionality.
-
+- Deep Patel (Front-end Lead): Deep will be responsible for leading the front-end development efforts. His role includes defining the front-end architecture, establishing a cohesive design and color palette, and assigning tasks to front-end developers. Deep's experience in front-end development makes him well-suited for this role.
+- Dravya & Darshit Patel (Front-end Developers): Dravya and Darshit will work closely with the front-end lead to implement front-end components based on the provided design and requirements. Their responsibilities include coding, testing, and ensuring a seamless user experience.
+- Dharmik Patel (Back-end Lead): Dharmik will take charge of the back-end development, overseeing the server-side architecture, database management, and server deployment. His experience in back-end development and NLP makes him the ideal candidate for this role.
+- Dev & Love Patel (Back-end Developers): Dev and Love will collaborate with the back-end lead to develop server-side functionalities and integrate the database. They will work on implementing the logic necessary for the platform's core functionality.
  **Schedule and Milestones:** Our development process is structured around key milestones to ensure progress throughout the semester:
 1. Project Initiation (Week 1-2):
-     - Define project scope, goals, and requirements.
-     - Set up the development environment.
-     - Establish communication channels.
-     - Create a project plan and assign roles.
+  - Define project scope, goals, and requirements.
+  - Set up the development environment.
+  - Establish communication channels.
+  - Create a project plan and assign roles.
 2. MVP Development (Week 3-6):
-     - Develop a Minimum Viable Product (MVP) with core features.
-     - Conduct initial testing and debugging.
-     - Prepare for internal testing and review.
+  - Develop a Minimum Viable Product (MVP) with core features.
+  - Conduct initial testing and debugging.
+  - Prepare for internal testing and review.
 3. Feature Additions (Week 7-10):
-     - Add additional features and functionalities.
-     - Conduct thorough testing of new features.
-     - Refine user interface based on feedback.
+  - Add additional features and functionalities.
+  - Conduct thorough testing of new features.
+  - Refine user interface based on feedback.
 4. Testing and Refinement (Week 11-14):
-     - Conduct comprehensive testing, including user acceptance testing.
-     - Address any identified issues and bugs.
-     - Optimize performance and security.
-     - Finalize documentation and user guides.
-
-**Major Risks:** 
+  - Conduct comprehensive testing, including user acceptance testing.
+  - Address any identified issues and bugs.
+  - Optimize performance and security.
+  - Finalize documentation and user guides.
+ **Major Risks:** 
 1. Technical Challenges: Complex technical issues or limitations in the chosen technologies could impede progress. We will address this by maintaining open communication within the team and seeking external expertise if needed.
 2. Scope Creep: Expanding project scope beyond the defined requirements can lead to delays. We will closely monitor project scope and prioritize features based on their impact and feasibility.
 3. Resource Limitations: Limited availability of team members or access to necessary resources may affect project timelines. We will mitigate this by allocating tasks effectively and having contingency plans in place.
-
  **External Feedback:** External feedback will be most valuable during the MVP development and testing phases. We plan to seek feedback from professors, industry experts, and potential end-users to refine our platform. This feedback will help us identify usability issues, performance bottlenecks, and areas for improvement before the final release. We will gather feedback through surveys, user testing sessions, and expert reviews, incorporating valuable insights into our development process.
 
-<!-- SOFTWARE ARCH -->
-### ❖ Software Architecture
+## Steps to Run
+
+## Commands in CronJob for dev environment
+ - ``` git pull --all ```
+ - ``` cd api ```
+ - ``` rm -rf node_modules/ ```
+ - ``` npm install -omit=optional ```
+ - ``` nest build ```
+ - ``` pm2 restart campusagileapi ```
+ - ``` systemctl restart nginx```
+
+# Software Arch
 
 **Part 1: Overview of CampusAgile Software Architecture:**
 
@@ -469,10 +329,7 @@ The data in CampusAgile is organized as follows:
 
 The choice between these alternatives depends on the team's capacity, user requirements, and the overall project scope. Implementing an AI chatbot can significantly enhance the user experience, but it requires additional development effort and maintenance. On the other hand, not implementing the AI chatbot may simplify development and reduce resource requirements but could result in a less automated and potentially less engaging user experience.
 
----
-
-<!-- SOFTWARE DSGN -->
-### ❖ Software Design
+**Part 2: Software Design** 
 
 1. **Frontend Component**:
     - **Packages/Classes/Units of Abstraction**:
@@ -526,10 +383,7 @@ The choice between these alternatives depends on the team's capacity, user requi
         - **`NLPProcessor`**: Performs natural language understanding and generation tasks.
         - **`ExternalServiceConnector`**: Communicates with external AI services for specialized tasks, such as data analysis or report generation (if applicable).
 
----
-
-<!-- CODING GUIDELINES -->
-### ❖ Coding Guidelines
+**Part 3: Coding guideline**
 
 1. **TypeScript**: **[TypeScript Style Guide](https://github.com/basarat/typescript-book/blob/master/docs/styleguide/styleguide.md)**
     - **Reason for Choice**: TypeScript is a statically typed superset of JavaScript, and following a well-established style guide helps ensure code consistency and maintainability.
@@ -550,8 +404,7 @@ The choice between these alternatives depends on the team's capacity, user requi
     - **Reason for Choice**: The SQL Style Guide provides guidelines for writing clear and maintainable SQL queries, which is essential for working with PostgreSQL.
     - **Enforcement**: SQL queries will be reviewed as part of the database schema design and data access layer. Code reviews will be conducted to ensure SQL queries adhere to the style guide and are optimized for performance.
 
-<!-- PROCESS DESCRIPTION -->
-### ❖ Process Descripition
+**Part 4: Process description**
 
 **Risk Assessment:**
 
@@ -693,3 +546,67 @@ The team consists of six members with the following roles and responsibilities:
 - Wiki: Collaborative documentation for internal use and community support (if applicable).
 
 Documentation will be developed incrementally alongside the software components. The team will allocate specific responsibilities for creating and maintaining documentation, ensuring that it remains up to date as the project progresses.
+
+# Test Automation Infrastructure
+
+- Testing Framework: Postman
+- Continuous Integration (CI) Service: Travis CI 
+
+**Justification for Test Automation Infrastructure:**
+
+1. Postman: Postman is a popular tool for testing APIs. It offers a user-friendly interface for creating and running API tests, making it suitable for testing the API endpoints of a NestJS application. Postman also provides the ability to automate tests, making it a good choice for API testing.
+
+**Adding a New Test to the Code Base:**
+
+To add a new test to the code base, follow these steps:
+
+1. Create a new test file with a **.spec.ts** extension in the same directory as the module or component you want to test.
+
+2. Write your test cases using the Jasmine framework's syntax to describe the behavior of the code.
+
+3. Use Jest's `describe` and it functions to structure and write your tests.
+
+4. Run the tests using the `npm test` command, which is configured to use Jest.
+
+CI Service and Repository Link:
+
+- CI Service: Github actions 
+- GitHub repository is linked to workflows, and workflow is triggered on every push to the GitHub repository.
+
+Justification for Travis CI:
+
+We chose Github Actions because it can ssh into my vps and run a script to pull and redeploy
+
+Pros/Cons Matrix for CI Services:
+
+1. Travis CI:
+    Pros: 
+        - Seamless integration with GitHub.
+        - Supports a wide range of programming languages, including TypeScript and Node.js.
+        - Free tier available for open-source projects.
+        - Easy configuration via a `.travis.yml` file.
+        - Fast build times 
+    Cons:
+        - Limited concurrency on free plan
+        - Limited customization options compared to some other CI services.
+
+2. CircleCI:
+    Pro: 
+        - High degree of customization.
+        - Support for Docker containers, which is useful for more complex build setups.
+        - Strong parallelism support for faster builds.
+        - Scalable for larger projects.
+    Cons:
+        - Learning curve due to the high level of customization.
+        - Costly for large-scale commercial projects.
+
+**Tests Executed in CI Build**
+
+All unit tests, integration tests, and end-to-end tests will be executed in the CI build to ensure the integrity and quality of the codebase.
+
+**Development Actions Triggering CI Build:**
+The CI build will be triggered by the following development actions:
+
+1. Push to the main repository branch.
+2. Pull requests opened against the main repository branch.
+3. Branch merges or pull request merges into the main branch.
