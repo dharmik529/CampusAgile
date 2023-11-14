@@ -21,7 +21,11 @@ import Axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Link as RouterLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faApple, faGoogle, faMicrosoft } from '@fortawesome/free-brands-svg-icons'; // Import Font Awesome icons
+import {
+  faApple,
+  faGoogle,
+  faMicrosoft,
+} from '@fortawesome/free-brands-svg-icons'; // Import Font Awesome icons
 import companyLogo from './logo.png';
 import Spline from '@splinetool/react-spline';
 import Loading from '../OtherComponents/loading';
@@ -34,7 +38,6 @@ function Login() {
   const [specialCode, setSpecialCode] = useState('');
   const [isDropdownEnabled, setIsDropdownEnabled] = useState(false);
 
-
   const [isLogin, setIsLogin] = React.useState(true);
   const [formData, setFormData] = React.useState({
     fullName: '',
@@ -45,7 +48,7 @@ function Login() {
   });
 
   const navigate = useNavigate();
-  
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     const updatedName = name === 'universityEmail' ? 'email' : name;
@@ -56,10 +59,10 @@ function Login() {
     if (isLogin) {
       // If isLogin is true, call handleLogin
       e.preventDefault();
-  
+
       // Update the apiUrl to your localhost
       const apiUrl = 'http://localhost:3000/auth/login';
-    
+
       try {
         const response = await fetch(apiUrl, {
           method: 'POST',
@@ -71,27 +74,27 @@ function Login() {
             password: formData.password,
           }),
         });
-    
+
         if (response.ok) {
           const data = await response.json();
           const authToken = data.token;
-    
+
           if (authToken) {
             // Store the token securely, for example, in local storage
             localStorage.setItem('authToken', authToken);
             localStorage.setItem('fullName', data.user.full_name);
             localStorage.setItem('userEmail', data.user.email);
-    
+
             console.log('User successfully authenticated');
             console.log('Token:', authToken); // Log the token to the console
             console.log('Full Name:', data.user.full_name);
             console.log('Redirecting to /home');
-    
+
             // Check if the 'navigate' function is defined
             if (navigate) {
               navigate('/home');
             } else {
-              console.error('Navigate function not available');
+              console.error('Curruntly our software is down.');
             }
           } else {
             console.error('Token not received in the authentication response');
@@ -100,63 +103,58 @@ function Login() {
           console.error('Login failed:', response.statusText);
           // Clear password field
           setFormData({ ...formData, password: '' });
-    
+
           // Display a pop-up or alert for incorrect credentials
           window.alert('Incorrect email or password. Please try again.');
         }
       } catch (error) {
         console.error('Error:', error);
-      } }
+      }
+    } else {
+      e.preventDefault();
 
-      else {
-        e.preventDefault();
-      
-        // Log the userType selection
-        const dataToSend = isLogin
-          ? formData
-          : {
-              ...formData,
-              full_name: formData.fullName,
-              username: formData.username,
-              email: formData.universityEmail,
-              password: formData.password,
-              category: formData.category,
-            };
-      
-        try {
-              // Log the data before sending
-          console.log('Data to Send:', dataToSend);
+      // Log the userType selection
+      const dataToSend = isLogin
+        ? formData
+        : {
+            ...formData,
+            full_name: formData.fullName,
+            username: formData.username,
+            email: formData.universityEmail,
+            password: formData.password,
+            category: formData.category,
+          };
 
-          // Call the backend API to create a user
-          const response = await Axios.post('http://localhost:3000/user/create', dataToSend);
-      
-          if (response.status === 201) {
-            console.log('User created successfully:', response.data);
-    
-            // Display a pop-up message
-            window.alert('You have successfully signed up!');
-    
-            // Clear all fields
-            setFormData({
-              fullName: '',
-              username: '',
-              category: '',
-              universityEmail: '',
-              password: '',
-            });
-           } else {
-            console.error('Failed to create user:', response.statusText);
-            window.alert('Failed to create user!');
-            setFormData({
-              fullName: '',
-              username: '',
-              category: '',
-              universityEmail: '',
-              password: '',
-            });
-          }
-        } catch (error) {
-          console.error('Error creating user:', error);
+      try {
+        // Log the data before sending
+        console.log('Data to Send:', dataToSend);
+
+        // Call the backend API to create a user
+        const response = await Axios.post(
+          'http://localhost:3000/user/create',
+          dataToSend,
+        );
+
+        if (response.status === 201) {
+          console.log('User created successfully:', response.data);
+
+          // Display a pop-up message
+          window.alert('You have successfully signed up!');
+
+          // Switch to the login section
+          setIsLogin(true);
+          setIsSpecialCodeEntered(false);
+
+          // Clear all fields
+          setFormData({
+            fullName: '',
+            username: '',
+            category: '',
+            universityEmail: '',
+            password: '',
+          });
+        } else {
+          console.error('Failed to create user:', response.statusText);
           window.alert('Failed to create user!');
           setFormData({
             fullName: '',
@@ -166,7 +164,18 @@ function Login() {
             password: '',
           });
         }
+      } catch (error) {
+        console.error('Error creating user:', error);
+        window.alert('Failed to create user!');
+        setFormData({
+          fullName: '',
+          username: '',
+          category: '',
+          universityEmail: '',
+          password: '',
+        });
       }
+    }
   };
 
   const bodyStyle = {
@@ -222,7 +231,7 @@ function Login() {
 
   useEffect(() => {
     const handleContextMenu = (e) => {
-      e.preventDefault(); 
+      e.preventDefault();
     };
 
     // Add an event listener to the document for the contextmenu event
@@ -232,8 +241,7 @@ function Login() {
     return () => {
       document.removeEventListener('contextmenu', handleContextMenu);
     };
-  }, []); 
-
+  }, []);
 
   if (isLoading) {
     // Display the loading component
@@ -243,7 +251,7 @@ function Login() {
       </Box>
     );
   }
-  
+
   // Add CSS styles for the left and right sides
   const leftSideStyle = {
     flex: '1',

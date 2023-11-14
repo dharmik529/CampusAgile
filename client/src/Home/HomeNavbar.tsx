@@ -234,7 +234,7 @@ function HomeNavbar() {
             justifyContent="center"
             cursor="pointer"
           />
-          <MenuList width="300px" height="135px">
+          <MenuList width="300px" height="157px">
             {loading ? (
               <Text fontSize="lg" fontWeight="bold" textAlign="center">
                 Loading...
