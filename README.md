@@ -21,7 +21,7 @@
      <img src="https://github.com/darsh8692.png?size=50">
    </a>
    <a href="https://github.com/dravyaaa">
-     <img src="https://github.com/dravyaaa?size=50">
+     <img src="https://github.com/dravyaaa.png?size=50">
    </a>
    <br>
 </div>
