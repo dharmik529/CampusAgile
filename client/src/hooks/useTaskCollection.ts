@@ -15,7 +15,7 @@ function useTaskCollection() {
         title: 'Task 1',
         color: 'blue.300',
       },
-    ],
+    ], 
     'In Progress': [
       {
         id: uuidv4(),

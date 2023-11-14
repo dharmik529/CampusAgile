@@ -1,10 +1,14 @@
-import { DeleteIcon } from '@chakra-ui/icons';
+import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
 import { Box, IconButton, ScaleFade } from '@chakra-ui/react';
 import _ from 'lodash';
-import { memo } from 'react';
+import { memo, useState } from 'react';
 import { useTaskDragAndDrop } from '../hooks/useTaskDragAndDrop';
 import { TaskModel } from '../utils/models';
 import { AutoResizeTextarea } from './AutoResizeTextArea';
+import { Link } from 'react-router-dom';
+import React from 'react';
+import CreateIssue from './CreateIssue';
+
 
 type TaskProps = {
   index: number;
@@ -35,6 +39,23 @@ function Task({
     handleDelete(task.id);
   };
 
+  const [isExpanded, setIsExpanded] = React.useState(false);
+
+  const toggleExpand = () => {
+    setIsExpanded(!isExpanded);
+  };
+
+  const [isCreateIssueModalOpen, setIsCreateIssueModalOpen] = useState(false);
+
+  const openCreateIssueModal = () => {
+    setIsCreateIssueModalOpen(true);
+  };
+
+  const closeCreateIssueModal = () => {
+    setIsCreateIssueModalOpen(false);
+  };
+
+
   return (
     <ScaleFade in={true} unmountOnExit>
       <Box
@@ -54,28 +75,16 @@ function Task({
         userSelect="none"
         bgColor={task.color}
         opacity={isDragging ? 0.5 : 1}
+        zIndex={1}
+        display="flex"
+        flexDirection="column" // Set the container to flex column
+        justifyContent="space-between" // Distribute items vertically
       >
-        <IconButton
-          position="absolute"
-          top={0}
-          right={0}
-          zIndex={100}
-          aria-label="delete-task"
-          size="md"
-          colorScheme="solid"
-          color={'gray.700'}
-          icon={<DeleteIcon />}
-          opacity={0}
-          _groupHover={{
-            opacity: 1,
-          }}
-          onClick={handleDeleteClick}
-        />
         <AutoResizeTextarea
           value={task.title}
           fontWeight="semibold"
           cursor="inherit"
-          border="none" 
+          border="none"
           p={0}
           resize="none"
           minH={70}
@@ -84,10 +93,47 @@ function Task({
           color="gray.700"
           onChange={handleTitleChange}
         />
+        <div>
+          <IconButton
+            position="absolute"
+            top={0}
+            left={163.5}
+            zIndex={100}
+            aria-label="expand-task"
+            size="md"
+            colorScheme="solid"
+            color={'gray.700'}
+            icon={<EditIcon/>}
+            opacity={0}
+            _groupHover={{
+              opacity: 1,
+            }}
+            onClick={openCreateIssueModal}
+          />
+          <CreateIssue isOpen={isCreateIssueModalOpen} onClose={closeCreateIssueModal} column={undefined} onCreateTask={undefined} />
+
+          <IconButton
+            position="absolute"
+            bottom={0}
+            right={-0.4}
+            zIndex={100}
+            aria-label="delete-task"
+            size="sm"
+            colorScheme="solid"
+            color={'gray.700'}
+            icon={<DeleteIcon />}
+            opacity={0}
+            _groupHover={{
+              opacity: 1,
+            }}
+            onClick={handleDeleteClick}
+          />
+        </div>
       </Box>
     </ScaleFade>
   );
 }
+
 export default memo(Task, (prev, next) => {
   if (
     _.isEqual(prev.task, next.task) &&

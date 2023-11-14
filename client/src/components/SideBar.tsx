@@ -1,17 +1,28 @@
-import React, { useState } from 'react';
-import { Box, Button, VStack, Text, useColorModeValue } from '@chakra-ui/react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { useState, useEffect } from 'react';
 import {
-  faTasks,
-  faCog,
-  faListAlt,
-  faFilter,
-  faFileAlt,
-  faCode,
-} from '@fortawesome/free-solid-svg-icons';
-import ProjectSetting from './ProjectSetting';
+  Box,
+  Button,
+  VStack,
+  Text,
+  useColorModeValue,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  FormControl,
+  FormLabel,
+  Input,
+  Textarea,
+  ModalBody,
+  Select,
+} from '@chakra-ui/react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTasks, faCog, faListAlt, faFilter, faFileAlt, faCode } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom'; // Import Link
 
-function SideBar() {
+// eslint-disable-next-line react/prop-types
+function SideBar( {onSwitchToCode, onSwitchToFiles, onSwitchToKanban} ) {
   const buttonStyle = {
     display: 'flex',
     alignItems: 'center',
@@ -32,16 +43,11 @@ function SideBar() {
     borderTop: '1px solid #000',
     margin: '15px 0',
     opacity: '20%',
-    
-    };
+  };
 
   const sidebarBgColor = useColorModeValue('gray.200', 'gray.700');
 
   const [isProjectSettingOpen, setIsProjectSettingOpen] = useState(false);
-  const [isIssuesHovered, setIsIssuesHovered] = useState(false);
-  const [isFiltersHovered, setIsFiltersHovered] = useState(false);
-  const [isPagesHovered, setIsPagesHovered] = useState(false);
-  const [isCodeHovered, setIsCodeHovered] = useState(false);
 
   const openProjectSetting = () => {
     setIsProjectSettingOpen(true);
@@ -49,6 +55,29 @@ function SideBar() {
 
   const closeProjectSetting = () => {
     setIsProjectSettingOpen(false);
+  };
+
+  const [projectData, setProjectData] = useState({
+    projectName: '',
+    description: '',
+    url: '',
+    projectType: '',
+  });
+
+  const handleProjectInputChange = (event) => {
+    const { name, value } = event.target;
+    setProjectData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const saveProjectSettings = () => {
+    // Handle saving project settings here
+    console.log('Project Settings:', projectData);
+    // You can send the projectData to your server or perform any necessary actions here
+    // Close the modal after saving
+    closeProjectSetting();
   };
 
   return (
@@ -73,20 +102,19 @@ function SideBar() {
         <Button
           style={{
             ...buttonStyle,
-            cursor: isIssuesHovered ? 'not-allowed' : 'pointer',
+            cursor: 'pointer',
             width: '100%',
           }}
-          
+          onClick={onSwitchToKanban}
         >
           <FontAwesomeIcon icon={faTasks} style={iconStyle} />
           Kanban Board
         </Button>
 
-        
         <Button
           style={{
             ...buttonStyle,
-            cursor: isIssuesHovered ? 'not-allowed' : 'pointer',
+            cursor: 'pointer',
             width: '100%',
           }}
           onClick={openProjectSetting}
@@ -95,70 +123,130 @@ function SideBar() {
           Project Settings
         </Button>
 
-        {/* Horizontal line */}
         <hr style={hrStyle} />
 
-        {/* "Issues" button */}
         <Button
           style={{
             ...buttonStyle,
-            cursor: isIssuesHovered ? 'not-allowed' : 'pointer',
-            width: '100%', // Set a fixed width for the button
+            cursor: 'not-allowed',
+            width: '100%',
           }}
-          onMouseEnter={() => setIsIssuesHovered(true)}
-          onMouseLeave={() => setIsIssuesHovered(false)}
         >
           <FontAwesomeIcon icon={faListAlt} style={iconStyle} />
-          {isIssuesHovered ? 'Not Implemented' : 'Issues'}
+          Not Implemented
         </Button>
 
-        {/* "Filters" button */}
         <Button
           style={{
             ...buttonStyle,
-            cursor: isFiltersHovered ? 'not-allowed' : 'pointer',
+            cursor: 'not-allowed',
             width: '100%',
           }}
-          onMouseEnter={() => setIsFiltersHovered(true)}
-          onMouseLeave={() => setIsFiltersHovered(false)}
-          
         >
           <FontAwesomeIcon icon={faFilter} style={iconStyle} />
-          {isFiltersHovered ? 'Not Implemented' : 'Filters'}
+          Not Implemented
         </Button>
 
-        {/* "Pages" button */}
         <Button
           style={{
             ...buttonStyle,
-            cursor: isPagesHovered ? 'not-allowed' : 'pointer',
+            cursor: 'pointer',
             width: '100%',
           }}
-          onMouseEnter={() => setIsPagesHovered(true)}
-          onMouseLeave={() => setIsPagesHovered(false)}
+          onClick={onSwitchToFiles}
         >
           <FontAwesomeIcon icon={faFileAlt} style={iconStyle} />
-          {isPagesHovered ? 'Not Implemented' : 'Pages'}
+          Files
         </Button>
 
-        {/* "Code" button */}
         <Button
           style={{
             ...buttonStyle,
-            cursor: isCodeHovered ? 'not-allowed' : 'pointer',
+            cursor: 'pointer',
             width: '100%',
           }}
-          onMouseEnter={() => setIsCodeHovered(true)}
-          onMouseLeave={() => setIsCodeHovered(false)}
+          onClick={onSwitchToCode}
         >
           <FontAwesomeIcon icon={faCode} style={iconStyle} />
-          {isCodeHovered ? 'Not Implemented' : 'Code'}
+          Code
         </Button>
       </VStack>
 
-      {isProjectSettingOpen && <ProjectSetting onClose={closeProjectSetting} />}
+      {isProjectSettingOpen && (
+        <Modal isOpen={isProjectSettingOpen} onClose={closeProjectSetting}>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>Project Settings</ModalHeader>
+            <ModalBody overflowY="auto">
+              <FormControl mb={4}>
+                <FormLabel htmlFor="projectName">Project Name</FormLabel>
+                <Input
+                  id="projectName"
+                  name="projectName"
+                  placeholder="Enter project name"
+                  value={projectData.projectName}
+                  onChange={handleProjectInputChange}
+                  required
+                />
+              </FormControl>
+
+              <FormControl mb={4}>
+                <FormLabel htmlFor="description">Description</FormLabel>
+                <Textarea
+                  id="description"
+                  name="description"
+                  rows={4}
+                  placeholder="Enter project description"
+                  value={projectData.description}
+                  onChange={handleProjectInputChange}
+                  required
+                />
+              </FormControl>
+
+              <FormControl mb={4}>
+                <FormLabel htmlFor="url">URL</FormLabel>
+                <Input
+                  id="url"
+                  name="url"
+                  placeholder="Enter project URL"
+                  value={projectData.url}
+                  onChange={handleProjectInputChange}
+                  required
+                />
+              </FormControl>
+
+              <FormControl mb={4}>
+                <FormLabel htmlFor="projectType">Project Type</FormLabel>
+                <Select
+                  id="projectType"
+                  name="projectType"
+                  placeholder="Select project type"
+                  value={projectData.projectType}
+                  onChange={handleProjectInputChange}
+                  required
+                >
+                  <option value="type1">Type 1</option>
+                  <option value="type2">Type 2</option>
+                  <option value="type3">Type 3</option>
+                </Select>
+              </FormControl>
+            </ModalBody>
+
+            <ModalFooter>
+              <Button colorScheme="blue" onClick={saveProjectSettings}>
+                Save Changes
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
+      )}
     </Box>
   );
 }
 
+
 export default SideBar;
+function togglePage(arg0: string) {
+  throw new Error('Function not implemented.');
+}
+

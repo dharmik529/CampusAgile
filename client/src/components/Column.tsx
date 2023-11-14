@@ -5,18 +5,20 @@ import {
   Heading,
   IconButton,
   Stack,
-  useColorModeValue,
+  useColorModeValue, 
 } from '@chakra-ui/react';
+import React, { useState } from 'react';
 import useColumnDrop from '../hooks/useColumnDrop';
 import useColumnTasks from '../hooks/useColumnTasks';
 import { ColumnType } from '../utils/enums';
 import Task from './Task';
+import CreateIssue from './CreateIssue';
 
 const ColumnColorScheme: Record<ColumnType, string> = {
-  Todo: 'gray',
+  'Todo': 'gray',
   'In Progress': 'blue',
-  Blocked: 'red',
-  Completed: 'green',
+  'Blocked': 'red',
+  'Completed': 'green',
 };
 
 function Column({ column }: { column: ColumnType }) {
@@ -42,6 +44,26 @@ function Column({ column }: { column: ColumnType }) {
     />
   ));
 
+  const createTask = (taskData) => {
+    // Pass the selected status to the addEmptyTask function
+    addEmptyTask({
+      ...taskData,
+      status: selectedStatus,
+    });
+  };
+
+
+  const [isCreateIssueModalOpen, setIsCreateIssueModalOpen] = useState(false);
+  const [selectedStatus, setSelectedStatus] = useState('Todo'); // Initialize with a default status
+
+  const openCreateIssueModal = () => {
+    setIsCreateIssueModalOpen(true);
+  };
+
+  const closeCreateIssueModal = () => {
+    setIsCreateIssueModalOpen(false);
+  };
+
   return (
     <Box>
       <Heading fontSize="md" mb={4} letterSpacing="wide">
@@ -62,11 +84,14 @@ function Column({ column }: { column: ColumnType }) {
         _hover={{ bgColor: useColorModeValue('gray.200', 'gray.600') }}
         py={2}
         variant="solid"
-        onClick={addEmptyTask}
+        // onClick={addEmptyTask}
         colorScheme="black"
         aria-label="add-task"
         icon={<AddIcon />}
+        onClick={openCreateIssueModal}
       />
+      <CreateIssue isOpen={isCreateIssueModalOpen} onClose={closeCreateIssueModal} onCreateTask={createTask} column={undefined} />
+
       <Stack
         ref={dropRef}
         direction={{ base: 'row', md: 'column' }}

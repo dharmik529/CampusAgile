@@ -1,44 +1,70 @@
-// ProjectSetting.tsx
-import React from 'react';
-import { Box, Text, Button, Input, Textarea, FormControl, FormLabel } from '@chakra-ui/react';
+import React, { useState } from 'react';
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  FormControl,
+  FormLabel,
+  Textarea,
+  ModalBody,
+  Input,
+  Button,
+  Box,
+} from '@chakra-ui/react'; 
 
-function ProjectSetting({ onClose }) {
+function ProjectSetting({ isOpen, onClose, onSaveProjectName, projectName }) {
+  const [newProjectName, setNewProjectName] = useState(projectName);
+
+  const handleSave = () => {
+    onSaveProjectName(newProjectName);
+    onClose();
+  };
+
   return (
-    <Box
-      position="fixed"
-      top="50%"
-      left="50%"
-      transform="translate(-50%, -50%)"
-      bg="white"
-      p="4"
-      borderRadius="md"
-      boxShadow="lg"
-      zIndex="999"
-      width="400px" // Adjust the width as needed
-    >
-      <Text fontWeight="bold" fontSize="xl" mb="4">
-        Project Settings
-      </Text>
-      <FormControl id="projectName" mb="4">
-        <FormLabel>Project Name</FormLabel>
-        <Input type="text" placeholder="Enter project name" />
-      </FormControl>
-      <FormControl id="projectURL" mb="4">
-        <FormLabel>Project URL</FormLabel>
-        <Input type="text" placeholder="Enter project URL" />
-      </FormControl>
-      <FormControl id="projectDescription" mb="4">
-        <FormLabel>Project Description</FormLabel>
-        <Textarea placeholder="Enter project description" />
-      </FormControl>
-      <FormControl id="projectCategory" mb="4">
-        <FormLabel>Project Category</FormLabel>
-        <Input type="text" placeholder="Enter project category" />
-      </FormControl>
-      <Button colorScheme="blue" onClick={onClose} mt="4">
-        Save Changes
-      </Button>
-    </Box>
+    <Modal isOpen={isOpen} onClose={onClose} size="xl">
+      <ModalOverlay />
+      <ModalContent>
+        <ModalHeader>Project Settings</ModalHeader>
+        <ModalBody overflowY="auto">
+          <FormControl mb={4}>
+            <FormLabel htmlFor="projectName">Project Name</FormLabel>
+            <Input
+              id="projectName"
+              type="text"
+              placeholder="Enter project name"
+              value={newProjectName}
+              onChange={(e) => setNewProjectName(e.target.value)}
+            />
+          </FormControl>
+
+          <FormControl mb={4}>
+            <FormLabel htmlFor="projectURL">Project URL</FormLabel>
+            <Input id="projectURL" type="text" placeholder="Enter project URL" />
+          </FormControl>
+
+          <FormControl mb={4}>
+            <FormLabel htmlFor="projectDescription">Project Description</FormLabel>
+            <Textarea id="projectDescription" placeholder="Enter project description" rows={8} />
+          </FormControl>
+
+          <FormControl mb={4}>
+            <FormLabel htmlFor="projectCategory">Project Category</FormLabel>
+            <Input id="projectCategory" type="text" placeholder="Enter project category" />
+          </FormControl>
+        </ModalBody>
+
+        <ModalFooter>
+          <Button colorScheme="blue" onClick={onClose} marginRight="1%">
+            Close
+          </Button>
+          <Button colorScheme="blue" onClick={handleSave}>
+            Save Changes
+          </Button>
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
   );
 }
 
