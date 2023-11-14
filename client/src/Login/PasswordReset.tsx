@@ -78,7 +78,7 @@ function ResetPassword() {
       // Check if the request was successful
       if (response.ok) {
         setResetSuccess(true);
-        navigate('/login');
+        // navigate('/login');
         setError('');
       } else {
         const data = await response.json();
