@@ -1,9 +1,10 @@
-# Weekly Report | 11/8/2023
+# Weekly Report | 11/15/2023
 
 ## **1. Agenda and Status**
 
 #### Agenda
-- 
+- Updates on chatbot progress
+- Discuss plans to wrap up the project(beta release, then final release). 
 
 #### Goals from Last Week
 - Alpha Release is next week so get ready for the demo and presentation.
@@ -12,7 +13,7 @@
 #### Progress and Issues
 - Successfully linked user authentication and password reset with the backend.
 - Conducted comprehensive tests user authentication and resolved all potential constraints.
-- Completed Alpha release.
+- Completed Alpha release and merged alpha release into main branch. Now everything will be pushed to main.
 
 #### Goals for Next Week
 - Establish connection with Projects endpoints and conduct comprehensive tests to ensure seamless functionality.
@@ -64,10 +65,15 @@
 - Get ready for alpha release the ulimate first demo of our project.
 
 #### Progress and Issues
-- 
+- Started the Alpha Release, Started implmenting different features such as user authentication, user sign-up, forgot password. (Worked with Love)
+- Connected front-end features user authentication, user sign-up, forgot password by calling the backend endpoints such as the create, updatepassword, auth-service (Worked with Love)
+- Fixed the auth service so that it uses email to recognize user, made change to be compatible with the frontend fields. (Worked with Love)
+- Issues with create project backend fields matching frontend fields, will fix next week.
 
 #### Goals for Next Week
-- 
+- Work on Project Create, Update, Delete, Find All, Find One from backend to frontend connection
+- Work on the issues and tasks Update, Delete, Find All, Create, - - - Find One from backend to frontend connection.
+- Work on fixing issues that come up along the way.
 
 # 
 ### Deep Patel
@@ -92,30 +98,35 @@
 ### Darsh Patel
 
 #### Goals from last week
-- In the upcoming week, will be collaborating with all team members in order to integrate API calls on frontend.
+- Adding features to the main Kanban board to make it functional as assigned by Deep (frontend lead)
+- Integrate API calls on frontend
 
 #### Progress and Issues
-- 
+- Finished authentication integration by collaborating with the backend.
+- Made the Kanban board functional by implementing drag-and-drop interface, allowing users to effortlessly organize tasks across different stages.
+- Issues included when details entered it should display title, assigner, assignee to the task card.
+- Still working on the feature.
 
 #### Goals for Next Week
-- 
+- Finish the task card issue by displaying title, assigner, assignee after creating it.
 
 # 
 ### Dravya Patel
 
 #### Goals from last week
-
-- Collaborate with backend developers to resolve any integration challenges.
-- Ensure proper error handling and validation for frontend-backend communication.
-- Help front end lead with connecting front end to backend.
-- Conduct user testing to gather feedback and make necessary improvements.
+- Implemented changes to Kanban Board
+- Started working on documentation and policies page
+- Solved any issues present in left navbar
 
 #### Progress and Issues
-
-- 
+- Collaborated with backend team to resolve initial issues integration challenges
+- Researched and started working on proper error handling and validation for communication between frontend and backend.
+- No major issues this week so far.
+Continued working on Documentation and Policies page.
 
 #### Goals for Next Week
+- Revisit Scrum Board to add additional features such as modification of notes after initial creation and communicate the process with front end team.
+- Ensure proper error handling and validation for frontend-backend communication.
+- Continue helping front end lead with any work relating to connecting front end and back end.
 
-- 
-
-# 
+#
