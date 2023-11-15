@@ -45,10 +45,15 @@
 - Go over all entity and make sure the required ones for alpha release are there. 
 
 #### Progress and issues
-- 
+- Started the Alpha Release, Started implmenting different features such as user authentication, user sign-up, forgot password. (Worked with Dev)
+- Connected front-end features user authentication, user sign-up, forgot password by calling the backend endpoints such as the create, updatepassword, auth-service (Worked with Dev)
+- Fixed the auth service so that it uses email to recognize user, made change to be compatible with the frontend fields. (Worked with Dev)
+- Issues with create project backend fields matching frontend fields, will fix next week.
 
-#### Goals for Next Week
-- 
+#### Goals for Next Week:
+- Work on Project Create, Update, Delete, Find All, Find One from backend to frontend connection
+- Work on the issues and tasks Update, Delete, Find All, Create, Find One from backend to frontend connection.
+- Work on fixing issues that come up along the way.
 
 # 
 ### Dev Patel
