@@ -95,17 +95,20 @@ function ScrumNavbarLeft() {
       paddingLeft="0px"
       paddingTop="50px"
     >
-      <VStack spacing="4" align="center" p="4">
+
+        <VStack spacing="4" align="center" p="4">
         <Text fontWeight="bold" paddingBottom="20px" fontSize="2xl">
           Scrum
         </Text>
 
-        <Link to="/home">
+        <Link to="/home" style={{ width: '100%' }}>
           <Button
             style={{
               ...buttonStyle,
               cursor: 'pointer',
-              width: '100%', 
+              width: '100%',
+              paddingLeft: '50px',
+              paddingRight: '50px',
             }}
           >
             <FontAwesomeIcon icon={faHome} style={iconStyle} />
@@ -113,12 +116,12 @@ function ScrumNavbarLeft() {
           </Button>
         </Link>
 
-        <Link to="/Project">
+        <Link to="/Project" style={{ width: '100%' }}>
           <Button
             style={{
               ...buttonStyle,
               cursor: 'pointer',
-              width: '100%', 
+              width: '100%', // Adjusted button width
             }}
           >
             <FontAwesomeIcon icon={faTasks} style={iconStyle} />

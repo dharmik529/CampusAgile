@@ -15,19 +15,26 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 import { EditIcon, DeleteIcon } from '@chakra-ui/icons';
-import { Link } from 'react-router-dom';
 import NavbarLeft from './ScrumNavbarLeft';
-import Notification from '../Home/Notification'; // Import the Notification component
 
 function Scrum() {
   const [note, setNote] = useState('');
   const [noteHistory, setNoteHistory] = useState([]);
   const [editingIndex, setEditingIndex] = useState(null);
-  const [isLoading, setIsLoading] = useState(true); // Add loading state
-  const [showNotification, setShowNotification] = useState(false); // State to control notification visibility
+  const [isLoading, setIsLoading] = useState(true);
+  const [notifications, setNotifications] = useState([]);
 
   const handleNoteChange = (e) => {
     setNote(e.target.value);
+  };
+
+  const addNotification = (text, type) => {
+    const notification = {
+      id: Date.now(),
+      text: text,
+      type: type,
+    };
+    setNotifications([...notifications, notification]);
   };
 
   const handleAddNote = () => {
@@ -37,42 +44,32 @@ function Scrum() {
         date: new Date().toLocaleString(),
         author: 'Scrum Manager',
       };
-  
-      // Update the note history
-      setNoteHistory([newNote, ...noteHistory]);
+
+      const updatedNotes = [newNote, ...noteHistory];
+      setNoteHistory(updatedNotes);
       setNote('');
-  
-      // Reset the editing index after adding a new note
+
+      localStorage.setItem('scrumNotes', JSON.stringify(updatedNotes));
+
       setEditingIndex(null);
-  
-      // Notify the user about the new scrum note
-      const notification = {
-        id: Date.now(),
-        text: 'A new scrum note was added!',
-        type: 'scrum', // Specify the type as 'scrum'
-      };
-  
-      // Store the notification in localStorage
-      localStorage.setItem('scrumNotification', JSON.stringify(notification));
-  
+
+      addNotification('A new note was added!', 'note');
       setTimeout(() => {
         window.scrollTo(0, document.body.scrollHeight);
       }, 100);
     }
   };
-  
 
   const handleEditNote = (index) => {
-    // Set the editing index to the clicked note
     setEditingIndex(index);
-
-    // Set the note text to the selected note for editing
-    setNote(noteHistory[index].note);
+    setNoteHistory((prevNotes) => {
+      setNote(prevNotes[index].note);
+      return prevNotes;
+    });
   };
 
   const handleSaveNote = () => {
     if (editingIndex !== null) {
-      // Update the note at the specified index
       const updatedNotes = [...noteHistory];
       updatedNotes[editingIndex] = {
         ...updatedNotes[editingIndex],
@@ -81,7 +78,12 @@ function Scrum() {
 
       setNoteHistory(updatedNotes);
       setNote('');
+
+      localStorage.setItem('scrumNotes', JSON.stringify(updatedNotes));
+
       setEditingIndex(null);
+
+      addNotification('A note was edited!', 'note');
     }
   };
 
@@ -89,15 +91,20 @@ function Scrum() {
     const updatedNotes = [...noteHistory];
     updatedNotes.splice(index, 1);
     setNoteHistory(updatedNotes);
+
+    localStorage.setItem('scrumNotes', JSON.stringify(updatedNotes));
+
+    addNotification('A note was deleted!', 'note');
   };
 
-  const { colorMode } = useColorMode(); // Get the current color mode
+  const { colorMode } = useColorMode();
 
-  // Simulate loading for 2 seconds
   useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
+    const storedNotes = localStorage.getItem('scrumNotes');
+    if (storedNotes) {
+      setNoteHistory(JSON.parse(storedNotes));
+    }
+    setIsLoading(false);
   }, []);
 
   return (
@@ -107,21 +114,21 @@ function Scrum() {
       align="center"
       justify="center"
       minH="100vh"
-      marginLeft={{ base: 0, md: '17%' }} // Adjust the left margin for different screen sizes
+      marginLeft={{ base: 0, md: '17%' }}
       bgColor={useColorModeValue('white', 'gray.800')}
     >
       <NavbarLeft />
       <Flex
         direction="column"
         align="center"
-        width="100%" // Ensure full width
+        width="100%"
       >
         <Box
           maxW="80%"
           width="100%"
-          marginTop={{ base: '10vh', md: '-25%' }} // Adjusted marginTop for responsiveness
-          maxH="90vh" // Adjusted maxH to ensure a maximum height of 90% of the viewport height
-          overflowY="auto" // Add vertical scroll if needed
+          marginTop={{ base: '10vh', md: '-25%' }}
+          maxH="90vh"
+          overflowY="auto"
           position="fixed"
           alignContent="center"
           bgColor={useColorModeValue('gray.50', 'gray.900')}
@@ -130,9 +137,9 @@ function Scrum() {
           boxShadow="md"
         >
           <Heading as="h1" size="lg" textAlign="center" mb={4}>
-            Notes by Scrum Master
+            Notes by Scrum Manager
           </Heading>
-          {isLoading ? ( // Display skeleton loading screen while loading
+          {isLoading ? (
             <Skeleton height="200px" mb={4} />
           ) : (
             <>
@@ -159,7 +166,7 @@ function Scrum() {
           {isLoading ? (
             <Skeleton height="45px" width="120px" />
           ) : (
-            noteHistory.map((note, index) => (
+            noteHistory.map((noteItem, index) => (
               <SlideFade in key={index} offsetY="20px">
                 <Box
                   bgColor={useColorModeValue('gray.50', 'gray.900')}
@@ -188,19 +195,19 @@ function Scrum() {
                     />
                   </HStack>
                   <Text fontSize="md" fontWeight="bold" mb={2}>
-                    {note.author} - {note.date}:
+                    {noteItem.author} - {noteItem.date}:
                   </Text>
                   {editingIndex === index ? (
                     <Textarea
-                      value={note.note}
+                      value={note}
                       onChange={handleNoteChange}
                       autoFocus
                       onBlur={handleSaveNote}
                     />
                   ) : (
                     <Text fontSize="md" color={colorMode === 'dark' ? 'white' : 'gray.600'}>
-                      {note.note.split('\n').map((line, index) => (
-                        <span key={index}>
+                      {noteItem.note.split('\n').map((line, idx) => (
+                        <span key={idx}>
                           {line}
                           <br />
                         </span>

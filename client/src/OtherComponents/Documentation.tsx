@@ -14,7 +14,6 @@ import {
 import { Link } from 'react-router-dom';
 import { ArrowBackIcon } from '@chakra-ui/icons';
 import { useColorMode } from '@chakra-ui/react';
-
 function Documentation() {
   const { colorMode } = useColorMode();
 
@@ -176,6 +175,18 @@ function Documentation() {
               fontWeight="bold"
             >
               CampusAgile.com - Official Website
+            </ChakraLink>
+          </ListItem>
+          <ListItem>
+            <ChakraLink 
+              // as={Link} 
+              // to="../team" 
+              href="https://team.deeppatel.tech"
+              target="_blank"
+              color="#007FFF" 
+              fontWeight="bold"
+            >
+              Meet Our Team!!
             </ChakraLink>
           </ListItem>
         </List>
