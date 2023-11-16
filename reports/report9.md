@@ -19,7 +19,7 @@
 - Establish connection with Projects endpoints and conduct comprehensive tests to ensure seamless functionality.
 - Initiate the linking of scrum and task endpoints once the frontend issue is resolved.
 
-#
+
 ## **2. Contributions of individual team members.**
 
 ### Dharmik Patel
@@ -32,10 +32,11 @@
 
 #### Progress and Issues
 
-- 
+- Looking to move to OpenAI's GPT's and GPT Agents
 
 #### Goals for Next Week
-- 
+
+- Research GPT's and GPT Agents and find how they can be integrated with out DB and API 
 
 # 
 ### Love Patel
