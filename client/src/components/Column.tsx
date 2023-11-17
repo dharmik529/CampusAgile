@@ -41,6 +41,9 @@ function Column({ column }: { column: ColumnType }) {
       onDropHover={swapTasks}
       onUpdate={updateTask}
       onDelete={deleteTask}
+      issueTitle=''
+      assignedTo=''
+      assignee=''
     />
   ));
 

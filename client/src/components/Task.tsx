@@ -16,6 +16,9 @@ type TaskProps = {
   onUpdate: (id: TaskModel['id'], updatedTask: TaskModel) => void;
   onDelete: (id: TaskModel['id']) => void;
   onDropHover: (i: number, j: number) => void;
+  issueTitle: string; // New prop for issue title
+  assignedTo: string; // New prop for assignedTo
+  assignee: string; // New prop for assignee
 };
 
 function Task({
@@ -24,6 +27,9 @@ function Task({
   onUpdate: handleUpdate,
   onDropHover: handleDropHover,
   onDelete: handleDelete,
+  issueTitle,
+  assignedTo,
+  assignee,
 }: TaskProps) {
   const { ref, isDragging } = useTaskDragAndDrop<HTMLDivElement>(
     { task, index: index },
@@ -128,6 +134,9 @@ function Task({
             }}
             onClick={handleDeleteClick}
           />
+          <p>{`Issue Title: ${issueTitle}`}</p>
+          <p>{`Assigned by: ${assignee}`}</p>
+          <p>{`Assigned to: ${assignedTo}`}</p>
         </div>
       </Box>
     </ScaleFade>
