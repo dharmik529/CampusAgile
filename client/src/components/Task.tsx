@@ -1,14 +1,11 @@
 import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
 import { Box, IconButton, ScaleFade } from '@chakra-ui/react';
 import _ from 'lodash';
+import React from 'react';
 import { memo, useState } from 'react';
 import { useTaskDragAndDrop } from '../hooks/useTaskDragAndDrop';
 import { TaskModel } from '../utils/models';
-import { AutoResizeTextarea } from './AutoResizeTextArea';
-import { Link } from 'react-router-dom';
-import React from 'react';
 import CreateIssue from './CreateIssue';
-
 
 type TaskProps = {
   index: number;
@@ -27,31 +24,22 @@ function Task({
   onUpdate: handleUpdate,
   onDropHover: handleDropHover,
   onDelete: handleDelete,
-  issueTitle,
-  assignedTo,
-  assignee,
 }: TaskProps) {
   const { ref, isDragging } = useTaskDragAndDrop<HTMLDivElement>(
     { task, index: index },
     handleDropHover,
   );
 
-  const handleTitleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const newTitle = e.target.value;
-    handleUpdate(task.id, { ...task, title: newTitle });
-  };
-
   const handleDeleteClick = () => {
     handleDelete(task.id);
   };
 
-  const [isExpanded, setIsExpanded] = React.useState(false);
-
-  const toggleExpand = () => {
-    setIsExpanded(!isExpanded);
-  };
-
   const [isCreateIssueModalOpen, setIsCreateIssueModalOpen] = useState(false);
+  const [issueInfo, setIssueInfo] = useState({
+    issueTitle: '', // Initialize with default values
+    assignedTo: '',
+    assignee: '',
+  });
 
   const openCreateIssueModal = () => {
     setIsCreateIssueModalOpen(true);
@@ -61,6 +49,14 @@ function Task({
     setIsCreateIssueModalOpen(false);
   };
 
+  const handleCreateTask = (taskId, updatedTask) => {
+    handleUpdate(taskId, { ...task, ...updatedTask });
+    setIssueInfo({
+      issueTitle: updatedTask.title || '', // Set issueInfo with the updated values
+      assignedTo: updatedTask.assignedTo || '',
+      assignee: updatedTask.assignee || '',
+    });
+  };
 
   return (
     <ScaleFade in={true} unmountOnExit>
@@ -83,22 +79,9 @@ function Task({
         opacity={isDragging ? 0.5 : 1}
         zIndex={1}
         display="flex"
-        flexDirection="column" // Set the container to flex column
-        justifyContent="space-between" // Distribute items vertically
+        flexDirection="column"
+        justifyContent="space-between"
       >
-        <AutoResizeTextarea
-          value={task.title}
-          fontWeight="semibold"
-          cursor="inherit"
-          border="none"
-          p={0}
-          resize="none"
-          minH={70}
-          maxH={200}
-          focusBorderColor="none"
-          color="gray.700"
-          onChange={handleTitleChange}
-        />
         <div>
           <IconButton
             position="absolute"
@@ -109,14 +92,19 @@ function Task({
             size="md"
             colorScheme="solid"
             color={'gray.700'}
-            icon={<EditIcon/>}
+            icon={<EditIcon />}
             opacity={0}
             _groupHover={{
               opacity: 1,
             }}
             onClick={openCreateIssueModal}
           />
-          <CreateIssue isOpen={isCreateIssueModalOpen} onClose={closeCreateIssueModal} column={undefined} onCreateTask={undefined} />
+          <CreateIssue
+            isOpen={isCreateIssueModalOpen}
+            onClose={closeCreateIssueModal}
+            onCreateTask={handleCreateTask}
+            taskId={task.id}
+          />
 
           <IconButton
             position="absolute"
@@ -134,9 +122,10 @@ function Task({
             }}
             onClick={handleDeleteClick}
           />
-          <p>{`Issue Title: ${issueTitle}`}</p>
-          <p>{`Assigned by: ${assignee}`}</p>
-          <p>{`Assigned to: ${assignedTo}`}</p>
+          {/* Display updated data from issueInfo state */}
+          <p>{`Issue Title: ${issueInfo.issueTitle}`}</p>
+          <p>{`Assigned by: ${issueInfo.assignee}`}</p>
+          <p>{`Assigned to: ${issueInfo.assignedTo}`}</p>
         </div>
       </Box>
     </ScaleFade>

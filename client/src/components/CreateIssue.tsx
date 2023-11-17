@@ -19,9 +19,7 @@ import useColumnTasks from '../hooks/useColumnTasks';
 import { ColumnType } from '../utils/enums';
 import Task from './Task';
 
-function CreateIssue({ isOpen, onClose, column, onCreateTask }) {
-  const { addEmptyTask } = useColumnTasks(column); 
-
+function CreateIssue({ isOpen, onClose, column, onCreateTask, taskId }) {
   const [issueTitle, setIssueTitle] = useState('');
   const [issueDescription, setIssueDescription] = useState('');
   const [assignedTo, setAssignedTo] = useState('');
@@ -31,7 +29,7 @@ function CreateIssue({ isOpen, onClose, column, onCreateTask }) {
   const [issueType, setIssueType] = useState('bug');
 
   const handleCreateTask = () => {
-    onCreateTask({
+    const taskInfo = {
       title: issueTitle,
       description: issueDescription,
       assignedTo,
@@ -39,7 +37,9 @@ function CreateIssue({ isOpen, onClose, column, onCreateTask }) {
       status,
       priority,
       issueType,
-    });
+    };
+
+    onCreateTask(taskId, taskInfo);
     onClose();
   };
 

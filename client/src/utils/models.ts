@@ -1,6 +1,9 @@
 import { ColumnType } from './enums';
 
 export interface TaskModel {
+  issueTitle: string;
+  assignedTo: string;
+  assignee: string;
   id: string;
   title: string;
   column: ColumnType;
