@@ -5,108 +5,111 @@ import {
   Box,
   Button,
   Center,
-  Flex,
   FormControl,
   FormLabel,
   Heading,
-  IconButton,
   Input,
-  Radio,
-  Stack,
-  Text,
-  useColorModeValue,
-} from '@chakra-ui/react';
-import { ArrowBackIcon, DeleteIcon } from '@chakra-ui/icons';
-import {
   Modal,
-  RadioGroup,
   ModalOverlay,
   ModalContent,
   ModalHeader,
   ModalFooter,
   ModalBody,
   ModalCloseButton,
+  Text,
+  useColorModeValue,
+  Stack,
+  IconButton,
 } from '@chakra-ui/react';
+import { ArrowBackIcon } from '@chakra-ui/icons';
 
 function Projects() {
   const [projectName, setProjectName] = useState('');
-  const [projectPeople, setProjectPeople] = useState('');
   const [projectDescription, setProjectDescription] = useState('');
-  const [projectURL, setProjectURL] = useState('');
-  const [projectType, setProjectType] = useState('');
-  const [projectsList, setProjectsList] = useState([
-    { id: 1, name: 'Project 1', description: 'This is the first project' },
-    { id: 2, name: 'Project 2', description: 'This is the second project' },
-    { id: 3, name: 'Project 3', description: 'This is the third project' },
-  ]);
+  const [projectsList, setProjectsList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Delete project related state and functions
-  const [projectToDelete, setProjectToDelete] = useState(null);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1500); // Simulate loading for 1.5 seconds
-  }, []);
-
-  const handleCreateProject = () => {
-    if (projectName.trim() !== '') {
-      const newProject = {
-        id: Date.now(),
-        name: projectName,
-        people: projectPeople,
-        description: projectDescription,
-        url: projectURL,
-        type: projectType || 'project', // Use the provided projectType or default to 'project'
-      };
-
-      // Update the projectsList
-      const updatedProjectsList = [...projectsList, newProject];
-      setProjectsList(updatedProjectsList);
-      setProjectName('');
-
-      // Store the updated projects list in localStorage
-      localStorage.setItem('projectsList', JSON.stringify(updatedProjectsList));
-
-      // Notify the user about the new project
-      const notification = {
-        id: Date.now(),
-        text: `A new project - "${projectName}" was created!`,
-        type: 'project', // Specify the type as 'project'
-      };
-
-      // Store the notification in localStorage
-      localStorage.setItem('projectNotification', JSON.stringify(notification));
-    }
-  };
-
-  // useEffect to load projects from localStorage on component mount
-  useEffect(() => {
-    const storedProjects = localStorage.getItem('projectsList');
-    if (storedProjects) {
-      setProjectsList(JSON.parse(storedProjects));
-      setIsLoading(false);
-    }
-  }, []);
-
-  // New state for the delete modal
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedProjectToDelete, setSelectedProjectToDelete] = useState(null);
 
-  // Function to open the delete modal
+  useEffect(() => {
+    // Fetch projects from the backend API
+    const fetchProjects = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/project/findAll');
+        if (!response.ok) {
+          throw new Error('Failed to fetch projects');
+        }
+        const data = await response.json();
+        setProjectsList(data);
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Error fetching projects:', error.message);
+        setIsLoading(false);
+      }
+    };
+
+    // Call the fetchProjects function
+    fetchProjects();
+  }, []);
+
+
+  const handleCreateProject = async () => {
+    if (projectName.trim() !== '') {
+      try {
+        const response = await fetch('http://localhost:3000/project/create', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name: projectName,
+            description: projectDescription,
+            priority: null,
+            status: null,
+            createdByUser: null,
+          }),
+        });
+  
+        if (!response.ok) {
+          throw new Error('Failed to create project');
+        }
+  
+        // Assuming the response is a string, you may need to adjust this based on your actual response structure
+        const message = await response.text();
+  
+        // Log the response message or handle it as needed
+        console.log(message);
+  
+        // Update the projectsList using the callback version of setProjectsList
+        setProjectsList((prevProjectsList) => {
+          const newProject = { id: prevProjectsList.length + 1, name: projectName, description: projectDescription };
+          return [...prevProjectsList, newProject];
+        });
+    
+        setProjectName('');
+  
+        // Notify the user about the new project
+        // ... (your notification logic)
+  
+      } catch (error) {
+        console.error('Error creating project:', error.message);
+        // Handle error (e.g., show an error message to the user)
+      }
+    }
+    
+  };
+
   const openDeleteModal = (projectId) => {
     setIsDeleteModalOpen(true);
     setSelectedProjectToDelete(projectId);
   };
 
-  // Function to close the delete modal
   const closeDeleteModal = () => {
     setIsDeleteModalOpen(false);
     setSelectedProjectToDelete(null);
   };
 
-  // Function to handle project deletion
   const handleDeleteProject = () => {
     if (selectedProjectToDelete !== null) {
       const updatedProjectsList = projectsList.filter(
@@ -143,7 +146,7 @@ function Projects() {
             boxShadow={'lg'}
             p={8}
           >
-            <Stack spacing={4}>
+            <form>
               <Heading fontSize={'2xl'}>Create a Project</Heading>
               <FormControl id="projectName">
                 <FormLabel>Project Name</FormLabel>
@@ -154,40 +157,13 @@ function Projects() {
                   onChange={(e) => setProjectName(e.target.value)}
                 />
               </FormControl>
-              <FormControl id="projectPeople">
-                <FormLabel>Add People to Group (Optional)</FormLabel>
-                <Input
-                  type="text"
-                  placeholder="Enter people to add"
-                  value={projectPeople}
-                  onChange={(e) => setProjectPeople(e.target.value)}
-                />
-              </FormControl>
               <FormControl id="projectDescription">
-                <FormLabel>Description (Optional)</FormLabel>
+                <FormLabel>Project Description</FormLabel>
                 <Input
                   type="text"
                   placeholder="Enter project description"
                   value={projectDescription}
                   onChange={(e) => setProjectDescription(e.target.value)}
-                />
-              </FormControl>
-              <FormControl id="projectURL">
-                <FormLabel>URL (Optional)</FormLabel>
-                <Input
-                  type="text"
-                  placeholder="Enter project URL"
-                  value={projectURL}
-                  onChange={(e) => setProjectURL(e.target.value)}
-                />
-              </FormControl>
-              <FormControl id="projectType">
-                <FormLabel>Project Type (Optional)</FormLabel>
-                <Input
-                  type="text"
-                  placeholder="Enter project type"
-                  value={projectType}
-                  onChange={(e) => setProjectType(e.target.value)}
                 />
               </FormControl>
               <Button
@@ -197,7 +173,7 @@ function Projects() {
               >
                 Create Project
               </Button>
-            </Stack>
+            </form>
           </Box>
         </Box>
 
@@ -210,8 +186,7 @@ function Projects() {
             ) : (
               projectsList.map((project) => (
                 <React.Fragment key={project.id}>
-                  
-                  <Link key={project.id} to="/kanban">
+                  <Link to={`/kanban/${project.id}`}>
                     <Box
                       bg={useColorModeValue('white', 'gray.700')}
                       boxShadow={'md'}
@@ -226,17 +201,17 @@ function Projects() {
                       </Text>
                     </Box>
                   </Link>
-                    <Button
-                      backgroundColor="#E6676B"
-                      size="sm"
-                      width="100px"
-                      marginLeft="77%"
-                      alignItems="center"
-                      mt={2}
-                      onClick={() => openDeleteModal(project.id)}
-                    >
-                      Delete
-                    </Button>
+                  <Button
+                    backgroundColor="#E6676B"
+                    size="sm"
+                    width="100px"
+                    marginLeft="77%"
+                    alignItems="center"
+                    mt={2}
+                    onClick={() => openDeleteModal(project.id)}
+                  >
+                    Delete
+                  </Button>
                 </React.Fragment>
               ))
             )}
