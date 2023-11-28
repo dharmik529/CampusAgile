@@ -27,6 +27,18 @@ export class ProjectService {
     await this.projectRepository.save(project);
     return `The project was created successfully`;
   }
+  // async createProject(createProjectDto: CreateProjectDto): Promise<string> {
+  //   const project = this.projectRepository.create(createProjectDto);
+  
+  //   try {
+  //     await this.projectRepository.save(project);
+  //     console.log('Project created successfully:', project);
+  //     return `The project was created successfully`;
+  //   } catch (error) {
+  //     console.error('Error creating project:', error.message);
+  //     throw new Error('Failed to create project');
+  //   }
+  // }
 
   async findAllProjects() {
     const projects = await this.projectRepository
