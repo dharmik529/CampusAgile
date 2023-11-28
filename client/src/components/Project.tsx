@@ -33,7 +33,6 @@ function Projects() {
   const [selectedProjectToDelete, setSelectedProjectToDelete] = useState(null);
 
   useEffect(() => {
-    // Fetch projects from the backend API
     const fetchProjects = async () => {
       try {
         const response = await fetch('http://localhost:3000/project/findAll');
@@ -49,10 +48,8 @@ function Projects() {
       }
     };
 
-    // Call the fetchProjects function
     fetchProjects();
   }, []);
-
 
   const handleCreateProject = async () => {
     if (projectName.trim() !== '') {
@@ -70,34 +67,33 @@ function Projects() {
             createdByUser: null,
           }),
         });
-  
+
         if (!response.ok) {
           throw new Error('Failed to create project');
         }
-  
-        // Assuming the response is a string, you may need to adjust this based on your actual response structure
+
         const message = await response.text();
-  
-        // Log the response message or handle it as needed
         console.log(message);
-  
-        // Update the projectsList using the callback version of setProjectsList
+
         setProjectsList((prevProjectsList) => {
-          const newProject = { id: prevProjectsList.length + 1, name: projectName, description: projectDescription };
+          const newProject = {
+            id: prevProjectsList.length + 1,
+            name: projectName,
+            description: projectDescription,
+          };
           return [...prevProjectsList, newProject];
         });
-    
+
         setProjectName('');
-  
+        setProjectDescription('');
+
         // Notify the user about the new project
         // ... (your notification logic)
-  
       } catch (error) {
         console.error('Error creating project:', error.message);
         // Handle error (e.g., show an error message to the user)
       }
     }
-    
   };
 
   const openDeleteModal = (projectId) => {
@@ -117,11 +113,7 @@ function Projects() {
       );
 
       setProjectsList(updatedProjectsList);
-
-      // Store the updated projects list in localStorage
       localStorage.setItem('projectsList', JSON.stringify(updatedProjectsList));
-
-      // Close the delete modal after deletion
       closeDeleteModal();
     }
   };
@@ -135,20 +127,21 @@ function Projects() {
         justifyContent="space-between"
         p={4}
         marginX="auto"
-        marginTop="4%"
+        marginTop="10%"
         marginBottom="4%"
       >
-        {/* Create Project Form (Left) */}
         <Box w="48%">
           <Box
-            rounded={'lg'}
+            rounded="lg"
             bg={useColorModeValue('white', 'gray.700')}
-            boxShadow={'lg'}
+            boxShadow="lg"
             p={8}
           >
-            <form>
-              <Heading fontSize={'2xl'}>Create a Project</Heading>
-              <FormControl id="projectName">
+            <form style={{ display: 'flex', flexDirection: 'column' }}>
+              <Heading fontSize="2xl" mb={4}>
+                Create a Project
+              </Heading>
+              <FormControl id="projectName" mb={4}>
                 <FormLabel>Project Name</FormLabel>
                 <Input
                   type="text"
@@ -157,7 +150,7 @@ function Projects() {
                   onChange={(e) => setProjectName(e.target.value)}
                 />
               </FormControl>
-              <FormControl id="projectDescription">
+              <FormControl id="projectDescription" mb={4}>
                 <FormLabel>Project Description</FormLabel>
                 <Input
                   type="text"
@@ -177,7 +170,6 @@ function Projects() {
           </Box>
         </Box>
 
-        {/* Existing Projects Cards (Right) */}
         <Box w="48%">
           <Stack spacing={4}>
             <Heading fontSize={'2xl'}>Existing Projects</Heading>
@@ -192,11 +184,12 @@ function Projects() {
                       boxShadow={'md'}
                       p={4}
                       rounded="lg"
+                      minHeight="75px"
                     >
                       <Text fontSize="lg" fontWeight="bold">
                         {project.name}
                       </Text>
-                      <Text fontSize="sm" color="gray.500">
+                      <Text fontSize="sm" color="gray.500" mt={2}>
                         {project.description}
                       </Text>
                     </Box>
@@ -205,8 +198,6 @@ function Projects() {
                     backgroundColor="#E6676B"
                     size="sm"
                     width="100px"
-                    marginLeft="77%"
-                    alignItems="center"
                     mt={2}
                     onClick={() => openDeleteModal(project.id)}
                   >
@@ -235,7 +226,11 @@ function Projects() {
               ))}
             </ModalBody>
             <ModalFooter>
-              <Button colorScheme="red" onClick={handleDeleteProject} marginRight="2%">
+              <Button
+                colorScheme="red"
+                onClick={handleDeleteProject}
+                marginRight="2%"
+              >
                 Delete
               </Button>
               <Button onClick={closeDeleteModal}>Cancel</Button>
