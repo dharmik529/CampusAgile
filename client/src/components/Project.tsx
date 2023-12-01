@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import {
   Box,
@@ -31,30 +32,49 @@ function Projects() {
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedProjectToDelete, setSelectedProjectToDelete] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
+    const storedProjects = localStorage.getItem('projectsList');
     const fetchProjects = async () => {
       try {
-        const response = await fetch('http://localhost:3000/project/findAll');
+        const response = await fetch('https://api.campusagile.tech/project/findAll');
         if (!response.ok) {
           throw new Error('Failed to fetch projects');
         }
         const data = await response.json();
         setProjectsList(data);
         setIsLoading(false);
+
+        // Only set localStorage if there is actual data
+        if (data.length > 0) {
+          localStorage.setItem('projectsList', JSON.stringify(data));
+        }
       } catch (error) {
         console.error('Error fetching projects:', error.message);
         setIsLoading(false);
       }
     };
 
-    fetchProjects();
-  }, []);
+    if (storedProjects) {
+      try {
+        setProjectsList(JSON.parse(storedProjects));
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Error parsing projects from local storage:', error.message);
+        // Handle the error as needed
+        // You may choose to fetch projects again in case of parsing error
+        fetchProjects();
+      }
+    } else {
+      fetchProjects();
+    }
+  }, []); // Empty dependency array, so it runs once on mount
 
   const handleCreateProject = async () => {
     if (projectName.trim() !== '') {
       try {
-        const response = await fetch('http://localhost:3000/project/create', {
+        const response = await fetch('https://api.campusagile.tech/project/create', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -75,20 +95,18 @@ function Projects() {
         const message = await response.text();
         console.log(message);
 
-        setProjectsList((prevProjectsList) => {
-          const newProject = {
-            id: prevProjectsList.length + 1,
-            name: projectName,
-            description: projectDescription,
-          };
-          return [...prevProjectsList, newProject];
-        });
+        const newProject = {
+          id: projectsList.length + 1,
+          name: projectName,
+          description: projectDescription,
+        };
+
+        const updatedProjects = [...projectsList, newProject];
+        setProjectsList(updatedProjects);
+        localStorage.setItem('projectsList', JSON.stringify(updatedProjects));
 
         setProjectName('');
         setProjectDescription('');
-
-        // Notify the user about the new project
-        // ... (your notification logic)
       } catch (error) {
         console.error('Error creating project:', error.message);
         // Handle error (e.g., show an error message to the user)
@@ -178,7 +196,9 @@ function Projects() {
             ) : (
               projectsList.map((project) => (
                 <React.Fragment key={project.id}>
-                  <Link to={`/kanban/${project.id}`}>
+                  <div
+                    onClick={() => navigate(`/kanban`, { state: { projectId: project.id } })}
+                  >
                     <Box
                       bg={useColorModeValue('white', 'gray.700')}
                       boxShadow={'md'}
@@ -192,8 +212,13 @@ function Projects() {
                       <Text fontSize="sm" color="gray.500" mt={2}>
                         {project.description}
                       </Text>
+                      {project.createdByUser && (
+                        <Text fontSize="sm" color="blue.500" mt={2}>
+                          Created By: {project.createdByUser.name}
+                        </Text>
+                      )}
                     </Box>
-                  </Link>
+                  </div>
                   <Button
                     backgroundColor="#E6676B"
                     size="sm"
@@ -208,6 +233,7 @@ function Projects() {
             )}
           </Stack>
         </Box>
+
 
         <Modal isOpen={isDeleteModalOpen} onClose={closeDeleteModal}>
           <ModalOverlay />
