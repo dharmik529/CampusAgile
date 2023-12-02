@@ -9,6 +9,7 @@ import { IssueModule } from './issue/issue.module';
 import typeOrmConfig from './typeorm.config';
 import { AttachmentModule } from './attachment/attachment.module';
 import { AuthModule } from './auth/auth.module';
+import { KanbanModule } from './kanban/kanban.module';
 
 
 @Module({
@@ -21,6 +22,7 @@ import { AuthModule } from './auth/auth.module';
     IssueModule,
     AttachmentModule,
     AuthModule,
+    KanbanModule
   ],
   controllers: [AppController],
   providers: [AppService],

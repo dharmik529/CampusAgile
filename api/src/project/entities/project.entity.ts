@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToOne} from 'typeorm';
 import { User } from '../../user/entities/user.entity';
+import { Kanban } from "../../kanban/entities/kanban.entity";
 
 export enum ProjectStatus {
   Open = 'Active',
@@ -35,7 +36,10 @@ export class Project {
   priority: ProjectPriority;
 
   @ManyToOne(type => User)
-  @JoinColumn({ name: "created_by_user" }) // Specify the foreign key column
+  @JoinColumn({ name: "created_by_user" })
   createdByUser: User;
+
+  @OneToOne(type => Kanban, kanban => kanban.project)
+  kanban: Kanban[];
 
 }

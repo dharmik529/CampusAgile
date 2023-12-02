@@ -8,8 +8,10 @@ import {
   UpdateDateColumn
 } from 'typeorm';
 import { User } from '../../user/entities/user.entity';
+// import { Kanban } from "../../kanban/entities/kanban.entity";
+import { IssueKanban } from 'src/kanban/entities/issue_kanban.entity';
 
-enum IssueStatus {
+export enum IssueStatus {
   Open = 'ToDo',
   InProgress = 'In Progress',
   Done = 'Completed',
@@ -31,7 +33,7 @@ enum Priority {
   Highest = 'Highest'
 }
 
-@Entity()
+@Entity('issue')
 export class Issue {
   @PrimaryGeneratedColumn()
   id: number;
@@ -64,4 +66,9 @@ export class Issue {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @ManyToOne(type => IssueKanban, issueKanban => issueKanban.issue)
+  issueKanbans: IssueKanban[]; // New line
 }
+export { User };
+
