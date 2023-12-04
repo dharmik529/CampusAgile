@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToOne} from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToOne } from 'typeorm';
 import { User } from '../../user/entities/user.entity';
 import { Kanban } from "../../kanban/entities/kanban.entity";
 
@@ -39,7 +39,8 @@ export class Project {
   @JoinColumn({ name: "created_by_user" })
   createdByUser: User;
 
-  @OneToOne(type => Kanban, kanban => kanban.project)
-  kanban: Kanban[];
+  @OneToOne(type => Kanban, kanban => kanban.project, { cascade: true, eager: true })
+  @JoinColumn()
+  kanban: Kanban;
 
 }

@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Container, SimpleGrid, Box, Skeleton } from '@chakra-ui/react';
 import Column from './Column';
 import { ColumnType } from '../utils/enums';
+import { useParams } from 'react-router-dom';
 
 const Kanban = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const { projectId } = useParams(); // Extract project ID from the URL
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -21,10 +23,10 @@ const Kanban = () => {
       ) : (
         <div>
           <SimpleGrid columns={{ base: 1, md: 4 }} spacing={{ base: 16, md: 4 }}>
-            <Column column={ColumnType.TO_DO} />
-            <Column column={ColumnType.IN_PROGRESS} />
-            <Column column={ColumnType.BLOCKED} />
-            <Column column={ColumnType.COMPLETED} />
+            <Column project={projectId} column={ColumnType.TO_DO} />
+            <Column project={projectId} column={ColumnType.IN_PROGRESS} />
+            <Column project={projectId} column={ColumnType.BLOCKED} />
+            <Column project={projectId} column={ColumnType.COMPLETED} />
           </SimpleGrid>
         </div>
       )}
@@ -42,11 +44,11 @@ const LoadingSkeleton = () => (
               <Skeleton height="80px" mb="4px" />
               <Skeleton height="500px" mb="20px" />
             </Box>
-        ))}
-      </SimpleGrid>
-    </Container>
-  </div>
-</Box>
+          ))}
+        </SimpleGrid>
+      </Container>
+    </div>
+  </Box>
 );
 
 export default Kanban;

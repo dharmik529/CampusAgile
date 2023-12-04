@@ -5,7 +5,7 @@ import {
   Heading,
   IconButton,
   Stack,
-  useColorModeValue, 
+  useColorModeValue,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import useColumnDrop from '../hooks/useColumnDrop';
@@ -21,7 +21,7 @@ const ColumnColorScheme: Record<ColumnType, string> = {
   'Completed': 'green',
 };
 
-function Column({ column }: { column: ColumnType }) {
+function Column({ project, column }: { project: string; column: ColumnType }) {
   const {
     tasks,
     addEmptyTask,
@@ -52,6 +52,7 @@ function Column({ column }: { column: ColumnType }) {
     addEmptyTask({
       ...taskData,
       status: selectedStatus,
+      project: project, // Include the project information
     });
   };
 

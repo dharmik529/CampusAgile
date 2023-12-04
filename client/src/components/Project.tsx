@@ -196,9 +196,7 @@ function Projects() {
             ) : (
               projectsList.map((project) => (
                 <React.Fragment key={project.id}>
-                  <div
-                    onClick={() => navigate(`/kanban`, { state: { projectId: project.id } })}
-                  >
+                  <div onClick={() => navigate(`/kanban/${project.id}`)}>
                     <Box
                       bg={useColorModeValue('white', 'gray.700')}
                       boxShadow={'md'}
