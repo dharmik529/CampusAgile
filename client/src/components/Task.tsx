@@ -103,8 +103,8 @@ function Task({
             isOpen={isCreateIssueModalOpen}
             onClose={closeCreateIssueModal}
             onCreateTask={handleCreateTask}
-            taskId={task.id}
-          />
+            taskId={task.id} column={undefined}          
+            />
 
           <IconButton
             position="absolute"

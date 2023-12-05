@@ -13,29 +13,35 @@ function useColumnTasks(column: ColumnType) {
 
   const columnTasks = tasks[column];
 
-  const addEmptyTask = useCallback(() => {
-    debug(`Adding new empty task to ${column} column`);
-    setTasks((allTasks) => {
-      const columnTasks = allTasks[column];
+  // Modify the addEmptyTask function to accept task data as an argument
+const addEmptyTask = useCallback((taskData) => {
+  debug(`Adding new empty task to ${column} column`);
+  setTasks((allTasks) => {
+    const columnTasks = allTasks[column];
 
-      if (columnTasks.length > MAX_TASK_PER_COLUMN) {
-        debug('Too many task!');
-        return allTasks;
-      }
+    if (columnTasks.length > MAX_TASK_PER_COLUMN) {
+      debug('Too many tasks!');
+      return allTasks;
+    }
 
-      const newColumnTask: TaskModel = {
-        id: uuidv4(),
-        title: `New ${column} task`,
-        color: pickChakraRandomColor('.300'),
-        column,
-      };
+    const newColumnTask = {
+      id: uuidv4(),
+      title: `New ${column} task`,
+      color: pickChakraRandomColor('.300'),
+      column,
+      issueTitle: '',
+      assignedTo: '',
+      assignee: '',
+      ...taskData, // Spread the taskData into the new task object
+    };
 
-      return {
-        ...allTasks,
-        [column]: [newColumnTask, ...columnTasks],
-      };
-    });
-  }, [column, setTasks]);
+    return {
+      ...allTasks,
+      [column]: [newColumnTask, ...columnTasks],
+    };
+  });
+}, [column, setTasks]);
+
 
   const deleteTask = useCallback(
     (id: TaskModel['id']) => {

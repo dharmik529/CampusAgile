@@ -15,7 +15,7 @@ enum Role {
     role: Role;
     created_at: Date;
     last_login: Date;
-    issuesAssigned: Issue[]; 
-    issuesReported: Issue[]; 
+    // issuesAssigned: Issue[]; 
+    // issuesReported: Issue[]; 
   }
   

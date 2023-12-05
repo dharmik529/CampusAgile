@@ -48,13 +48,10 @@ function Column({ project, column }: { project: string; column: ColumnType }) {
   ));
 
   const createTask = (taskData) => {
-    // Pass the selected status to the addEmptyTask function
-    addEmptyTask({
-      ...taskData,
-      status: selectedStatus,
-      project: project, // Include the project information
-    });
+    // Pass the taskData to addEmptyTask function
+    addEmptyTask(taskData);
   };
+  
 
 
   const [isCreateIssueModalOpen, setIsCreateIssueModalOpen] = useState(false);
@@ -94,7 +91,7 @@ function Column({ project, column }: { project: string; column: ColumnType }) {
         icon={<AddIcon />}
         onClick={openCreateIssueModal}
       />
-      <CreateIssue isOpen={isCreateIssueModalOpen} onClose={closeCreateIssueModal} onCreateTask={createTask} column={undefined} />
+      <CreateIssue isOpen={isCreateIssueModalOpen} onClose={closeCreateIssueModal} onCreateTask={createTask} column={undefined} taskId={undefined} />
 
       <Stack
         ref={dropRef}

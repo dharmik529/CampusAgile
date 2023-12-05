@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import { Box, Flex, Icon } from '@chakra-ui/react';
 import { SearchIcon, AddIcon, QuestionOutlineIcon } from '@chakra-ui/icons';

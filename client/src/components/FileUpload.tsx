@@ -37,7 +37,6 @@ const FileUpload = () => {
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
-    accept: 'application/pdf, image/*', // Define accepted file types (PDF and images in this example)
   });
 
   const renderUploadedFiles = () => {
@@ -98,7 +97,7 @@ const FileUpload = () => {
       minute: 'numeric',
       second: 'numeric',
     };
-    return new Date(date).toLocaleDateString(undefined, options);
+    return new Date(date).toLocaleDateString(undefined);
   };
 
   return (

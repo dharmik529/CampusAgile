@@ -48,13 +48,11 @@ const CodeEditor = () => {
   const [code, setCode] = useState('');
   const [language, setLanguage] = useState('javascript');
   const [fileName, setFileName] = useState('Untitled.js');
-  const [isCodePosted, setIsCodePosted] = useState(false);
-  const [formattedCode, setFormattedCode] = useState('');
   const [userName, setUserName] = useState('');
+  const [postedCodes, setPostedCodes] = useState([]);
 
   const handleCodeChange = (event) => {
     setCode(event.target.value);
-    setIsCodePosted(false);
   };
 
   const handleLanguageChange = (event) => {
@@ -81,17 +79,16 @@ const CodeEditor = () => {
         parser: 'babel',
         plugins: [parserBabel],
       });
-      setFormattedCode(formatted);
+      return formatted;
     } catch (error) {
       console.error('Code formatting error:', error);
-      setFormattedCode(code);
+      return code;
     }
   };
 
-  const copyCode = () => {
-    const codeToCopy = formattedCode;
+  const copyCode = (formattedCode) => {
     const textArea = document.createElement('textarea');
-    textArea.value = codeToCopy;
+    textArea.value = formattedCode;
     document.body.appendChild(textArea);
     textArea.select();
     document.execCommand('copy');
@@ -99,26 +96,35 @@ const CodeEditor = () => {
     alert('Code copied to clipboard!');
   };
 
-  const deleteCode = () => {
+  const deleteCode = (index) => {
+    const updatedCodes = [...postedCodes];
+    updatedCodes.splice(index, 1);
+    setPostedCodes(updatedCodes);
+  };
+
+  const postCode = () => {
+    const formatted = formatCode();
+    const postedCode = {
+      code: formatted,
+      language,
+      fileName,
+      userName,
+    };
+    setPostedCodes([...postedCodes, postedCode]);
+
+    // Reset input fields after posting
     setCode('');
     setLanguage('javascript');
     setFileName('Untitled.js');
-    setIsCodePosted(false);
-    setFormattedCode('');
     setUserName('');
-  };  
-
-  const postCode = () => {
-    formatCode();
-    setIsCodePosted(true);
   };
 
   const sidebarBgColor = useColorModeValue('gray.100', 'gray.900');
 
   return (
     <ChakraProvider>
-      <Box style={{ display: 'flex', flexDirection: 'column'}}>
-        <div style={{alignItems: 'center'}}>
+      <Box style={{ display: 'flex', flexDirection: 'column' }}>
+        <div style={{ alignItems: 'center' }}>
           <Box
             maxW="container.lg"
             marginBottom="5%"
@@ -130,7 +136,17 @@ const CodeEditor = () => {
             display="absolute"
             justifyContent="center"
           >
-            <Container maxW="container.lg" mt="3" bgColor="white" borderRadius="md" boxShadow="md" p="4" marginTop="5%" marginBottom="5%" bg={sidebarBgColor}>
+            <Container
+              maxW="container.lg"
+              mt="3"
+              bgColor="white"
+              borderRadius="md"
+              boxShadow="md"
+              p="4"
+              marginTop="5%"
+              marginBottom="5%"
+              bg={sidebarBgColor}
+            >
               <Heading as="h1" size="2xl" textAlign="center">
                 Code Editor
               </Heading>
@@ -176,9 +192,6 @@ const CodeEditor = () => {
                   />
                 </FormControl>
                 <Stack direction={{ base: 'column', md: 'row' }} spacing="4">
-                  <Button colorScheme="blue" onClick={formatCode}>
-                    Format Code
-                  </Button>
                   <Button colorScheme="blue" onClick={postCode}>
                     Post Code
                   </Button>
@@ -186,24 +199,39 @@ const CodeEditor = () => {
               </Stack>
             </Container>
 
-            {isCodePosted && (
-              <Box mt="6">
+            {postedCodes.slice().reverse().map((postedCode, index) => (
+              <Box key={index} mt="6">
                 <Text paddingBottom="0.5%" paddingLeft="10px">
-                  {fileName && `File Name: ${fileName}`} ︴Posted by: {userName}{' '}
-                  <Button colorScheme="transparent" color="gray" onClick={deleteCode} ml="2" float="right" top={-2} >
+                  {postedCode.fileName && `File Name: ${postedCode.fileName}`} ︴Posted by: {postedCode.userName}{' '}
+                  <Button
+                    colorScheme="transparent"
+                    color="gray"
+                    onClick={() => deleteCode(index)}
+                    ml="2"
+                    float="right"
+                    top={-2}
+                  >
                     <FontAwesomeIcon icon={faTrash} />
                   </Button>
-                  <Button colorScheme="transparent" color="gray" onClick={copyCode} ml="2" float="right" top={-2} right={-5}>
+                  <Button
+                    colorScheme="transparent"
+                    color="gray"
+                    onClick={() => copyCode(postedCode.code)}
+                    ml="2"
+                    float="right"
+                    top={-2}
+                    right={-5}
+                  >
                     <FontAwesomeIcon icon={faCopy} />
                   </Button>
                 </Text>
                 <Box bg={sidebarBgColor} borderRadius="md" p="4">
-                  <SyntaxHighlighter language={language} style={atomOneLight} bg={sidebarBgColor} borderRadius="md">
-                    {formattedCode}
+                  <SyntaxHighlighter language={postedCode.language} style={atomOneLight} bg={sidebarBgColor} borderRadius="md">
+                    {postedCode.code}
                   </SyntaxHighlighter>
                 </Box>
               </Box>
-            )}
+            ))}
           </Box>
         </div>
       </Box>

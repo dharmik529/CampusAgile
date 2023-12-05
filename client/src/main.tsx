@@ -15,7 +15,6 @@ import Terms from './Privacy/terms';
 import PrivacyPolicy from './Privacy/PrivacyPolicy';
 import PersonalLicense from './OtherComponents/PersonalLicense';
 import UniversityCommunity from './OtherComponents/UniversityCommunity';
-import AI from './AI';
 import Loading from './OtherComponents/loading';
 import OTPVerification from './Login/OTPVerification';
 import NotFound from './OtherComponents/NotFound';
@@ -48,7 +47,6 @@ const routes = [
   { path: '/Documentation', element: <ProtectedRoute element={<Documentation />} /> },
   { path: '/terms', element: <Terms /> },
   { path: '/PrivacyPolicy', element: <PrivacyPolicy /> },
-  { path: '/AI', element: <ProtectedRoute element={<AI />} /> },
   { path: '/Loading', element: <Loading /> },
   { path: '/OTPVerification', element: <OTPVerification /> },
   { path: '/ResetPassword', element: <ResetPassword /> },
@@ -59,7 +57,7 @@ const routes = [
   { path: '*', element: <NotFound /> },
 ];
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+ReactDOM.render(
   <React.StrictMode>
     <ChakraProvider theme={theme}>
       <Router>
@@ -72,4 +70,6 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
       </Router>
     </ChakraProvider>
   </React.StrictMode>,
+  document.getElementById('root')
 );
+
