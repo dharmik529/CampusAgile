@@ -30,14 +30,14 @@ export class ProjectService {
     // Save the project first to generate its ID
     await this.projectRepository.save(project);
 
-    const kanban = new Kanban();
-    kanban.project = project;
+    //const kanban = new Kanban();
+    //kanban.project = project;
 
     // Save the Kanban with the project association
-    await this.kanbanRepository.save(kanban);
+    //await this.kanbanRepository.save(kanban);
 
     // Associate the Kanban with the project
-    project.kanban = kanban;
+    //project.kanban = kanban;
 
     await this.projectRepository.save(project);
     return `The project was created successfully`;

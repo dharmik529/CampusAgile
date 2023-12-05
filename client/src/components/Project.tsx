@@ -38,7 +38,7 @@ function Projects() {
     const storedProjects = localStorage.getItem('projectsList');
     const fetchProjects = async () => {
       try {
-        const response = await fetch('https://api.campusagile.tech/project/findAll');
+        const response = await fetch('http://localhost:3000/project/findAll');
         if (!response.ok) {
           throw new Error('Failed to fetch projects');
         }
@@ -74,7 +74,8 @@ function Projects() {
   const handleCreateProject = async () => {
     if (projectName.trim() !== '') {
       try {
-        const response = await fetch('https://api.campusagile.tech/project/create', {
+        // Create the project
+        const projectResponse = await fetch('http://localhost:3000/project/create', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -88,17 +89,51 @@ function Projects() {
           }),
         });
 
-        if (!response.ok) {
+        if (!projectResponse.ok) {
           throw new Error('Failed to create project');
         }
 
-        const message = await response.text();
-        console.log(message);
+        const project = await projectResponse.json();
+
+        // Create the Kanban entry
+        const kanbanResponse = await fetch('http://localhost:3000/kanban/create', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            projectId: project.id, // Pass the project ID to associate with the Kanban entry
+            assignee: null, // Set the assignee data here
+            reporter: null, // Set the reporter data here
+          }),
+        });
+
+        if (!kanbanResponse.ok) {
+          throw new Error('Failed to create Kanban entry');
+        }
+
+        const kanban = await kanbanResponse.json();
+        console.log(kanban);
+
+        // Update the project with the generated Kanban ID
+        const updateProjectResponse = await fetch(`http://localhost:3000/project/update/${project.id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            kanbanId: kanban.id, // Update the project with the generated Kanban ID
+          }),
+        });
+
+        if (!updateProjectResponse.ok) {
+          throw new Error('Failed to update project with Kanban ID');
+        }
 
         const newProject = {
-          id: projectsList.length + 1,
-          name: projectName,
-          description: projectDescription,
+          id: project.id,
+          name: project.name,
+          description: project.description,
         };
 
         const updatedProjects = [...projectsList, newProject];
@@ -113,6 +148,7 @@ function Projects() {
       }
     }
   };
+
 
   const openDeleteModal = (projectId) => {
     setIsDeleteModalOpen(true);

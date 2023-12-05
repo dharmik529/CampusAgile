@@ -40,7 +40,6 @@ export class Project {
   createdByUser: User;
 
   @OneToOne(type => Kanban, kanban => kanban.project, { cascade: true, eager: true })
-  @JoinColumn()
+  @JoinColumn({ name: "kanbanid" })
   kanban: Kanban;
-
 }
