@@ -75,7 +75,7 @@ function OTPVerification() {
               </Heading>
 
               <form onSubmit={handleOTPSubmit}>
-                <h3 mb={4}> 
+                <h3 style={{ marginBottom: '20px' }}> 
                   Verification code sent to your email
                 </h3>
 
@@ -90,7 +90,7 @@ function OTPVerification() {
                         name={`otp-${index}`}
                         value={digit}
                         onChange={(e) => handleOTPInputChange(e, index)}
-                        maxLength="1"
+                        maxLength={1}
                         size="lg"
                         textAlign="center"
                         borderColor={colorMode === 'dark' ? 'gray.600' : 'gray.200'}

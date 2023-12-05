@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState } from 'react';
 import {
   Box,
@@ -148,7 +149,7 @@ function UniversityCommunity() {
           <ModalCloseButton />
           <ModalBody>
             <Text fontSize="lg" mb={4}>
-              We'd love to hear your feedback! Please click the button below to provide your input.
+              We would love to hear your feedback! Please click the button below to provide your input.
             </Text>
             <HStack spacing={4} justifyContent="flex-end">
               <Button
@@ -180,7 +181,7 @@ function UniversityCommunity() {
 
         <Flex justifyContent="center" flexWrap="wrap">
           <Circle
-            style={buttonStyle}
+            sx={buttonStyle}
             onClick={() => setSelectedSection('University Groups')}
             bgColor={selectedSection === 'University Groups' ? 'blue.500' : 'gray.200'}
             color={selectedSection === 'University Groups' ? 'white' : 'black'}
@@ -191,7 +192,7 @@ function UniversityCommunity() {
           </Circle>
 
           <Circle
-            style={buttonStyle}
+            sx={buttonStyle}
             onClick={() => setSelectedSection('Ongoing Projects')}
             bgColor={selectedSection === 'Ongoing Projects' ? 'blue.500' : 'gray.200'}
             color={selectedSection === 'Ongoing Projects' ? 'white' : 'black'}
@@ -202,7 +203,7 @@ function UniversityCommunity() {
           </Circle>
 
           <Circle
-            style={buttonStyle}
+            sx={buttonStyle}
             onClick={() => setSelectedSection('Recents')}
             bgColor={selectedSection === 'Recents' ? 'blue.500' : 'gray.200'}
             color={selectedSection === 'Recents' ? 'white' : 'black'}
@@ -213,7 +214,7 @@ function UniversityCommunity() {
           </Circle>
 
           <Circle
-            style={buttonStyle}
+            sx={buttonStyle}
             onClick={() => setSelectedSection('Trending Projects')}
             bgColor={selectedSection === 'Trending Projects' ? 'blue.500' : 'gray.200'}
             color={selectedSection === 'Trending Projects' ? 'white' : 'black'}

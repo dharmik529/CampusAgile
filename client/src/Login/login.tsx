@@ -54,7 +54,7 @@ function Login() {
     const updatedName = name === 'universityEmail' ? 'email' : name;
     setFormData({ ...formData, [name]: value });
   };
-  const handleSubmit = async (e, data) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (isLogin) {
       // If isLogin is true, call handleLogin
@@ -292,7 +292,7 @@ function Login() {
       bg={colorMode === 'dark' ? 'gray.980' : 'gray.200'}
       justifyContent="flex-start" // Align both sides to the left edge
     >
-      <Box style={leftSideStyle}>
+      <Box sx={leftSideStyle}>
         <Image
           src={companyLogo}
           alt="Company Logo"
@@ -303,20 +303,20 @@ function Login() {
           m={4}
           zIndex="1"
         />
-        <div style={bodyStyle}>
+        <Box sx={bodyStyle}>
           <Spline scene={selectedLink} style={{ opacity: 0.5 }} />
-          <Text fontSize="2xl" fontWeight="" style={overlayTextStyle}>
+          <Text fontSize="2xl" fontWeight="" sx={overlayTextStyle}>
             Welcome to CampusAgile! We are your one-stop solution for all
             campus-related tasks and communication. Join us and make campus life
             easier and more efficient.
           </Text>
-        </div>
+        </Box>
       </Box>
 
       <Divider orientation="vertical" borderColor="gray.300" h="100%" />
 
       <Container
-        style={rightSideStyle}
+        sx={rightSideStyle}
         maxW="container.sm"
         py={8}
         borderRadius="none"
@@ -447,7 +447,7 @@ function Login() {
                   value={formData.password}
                   onChange={handleChange}
                   placeholder="********"
-                  minLength="8"
+                  minLength={8}
                   pattern="^(?=.*[A-Z]).{8,}$"
                 />
                 <Text fontSize="sm" color="gray.500" mt={1}>
@@ -518,9 +518,9 @@ function Login() {
                 ? "Don't have an account? "
                 : 'Already have an account? '}
               <Link
-                as="button"
                 onClick={() => setIsLogin(!isLogin)}
                 color="teal.500"
+                to={''}
               >
                 {isLogin ? 'Sign Up' : 'Login'}
               </Link>

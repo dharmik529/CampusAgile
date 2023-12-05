@@ -117,7 +117,7 @@ function NavbarLeft() {
             Create Issue
           </Button>
         </Box>
-        <CreateIssue isOpen={isCreateIssueModalOpen} onClose={closeCreateIssueModal} column={undefined} onCreateTask={undefined} />
+        <CreateIssue isOpen={isCreateIssueModalOpen} onClose={closeCreateIssueModal} column={undefined} onCreateTask={undefined} taskId={undefined} />
 
         {/* Home Button */}
         <Box w="100%" mb={4}>
