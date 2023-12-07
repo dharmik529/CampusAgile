@@ -28,7 +28,7 @@
 
 - Dharmik Patel (Scrum Master & AI Engineer)
 - Deep Patel (Front-end Lead)
-- Dravya & Darshit Patel (Front-end Developers)
+- Dravya & Darsh Patel (Front-end Developers)
 - Dev & Love Patel (Back-end Developers)
 
 ---
