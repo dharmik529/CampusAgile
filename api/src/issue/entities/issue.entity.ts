@@ -5,7 +5,9 @@ import {
   ManyToOne,
   JoinColumn,
   CreateDateColumn,
-  UpdateDateColumn
+  UpdateDateColumn,
+  JoinTable,
+  ManyToMany,
 } from 'typeorm';
 import { User } from '../../user/entities/user.entity';
 // import { Kanban } from "../../kanban/entities/kanban.entity";
@@ -67,7 +69,8 @@ export class Issue {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @ManyToOne(type => IssueKanban, issueKanban => issueKanban.issue)
+  @ManyToMany(type => IssueKanban, issueKanban => issueKanban.issue)
+  @JoinTable({ name: 'issue_kanban' })
   issueKanbans: IssueKanban[]; // New line
 }
 export { User };

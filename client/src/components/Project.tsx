@@ -29,6 +29,8 @@ function Projects() {
   const [projectDescription, setProjectDescription] = useState('');
   const [projectsList, setProjectsList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const userEmail = localStorage.getItem('userEmail');
+  console.log('Retrieved User Email:', userEmail); 
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedProjectToDelete, setSelectedProjectToDelete] = useState(null);
