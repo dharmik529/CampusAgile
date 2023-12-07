@@ -1,8 +1,7 @@
 import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
 import { Box, IconButton, ScaleFade } from '@chakra-ui/react';
 import _ from 'lodash';
-import React from 'react';
-import { memo, useState } from 'react';
+import React, { memo, useState } from 'react';
 import { useTaskDragAndDrop } from '../hooks/useTaskDragAndDrop';
 import { TaskModel } from '../utils/models';
 import CreateIssue from './CreateIssue';
@@ -13,9 +12,6 @@ type TaskProps = {
   onUpdate: (id: TaskModel['id'], updatedTask: TaskModel) => void;
   onDelete: (id: TaskModel['id']) => void;
   onDropHover: (i: number, j: number) => void;
-  issueTitle: string; // New prop for issue title
-  assignedTo: string; // New prop for assignedTo
-  assignee: string; // New prop for assignee
 };
 
 function Task({
@@ -26,7 +22,7 @@ function Task({
   onDelete: handleDelete,
 }: TaskProps) {
   const { ref, isDragging } = useTaskDragAndDrop<HTMLDivElement>(
-    { task, index: index },
+    { task, index },
     handleDropHover,
   );
 
@@ -35,11 +31,6 @@ function Task({
   };
 
   const [isCreateIssueModalOpen, setIsCreateIssueModalOpen] = useState(false);
-  const [issueInfo, setIssueInfo] = useState({
-    issueTitle: '', // Initialize with default values
-    assignedTo: '',
-    assignee: '',
-  });
 
   const openCreateIssueModal = () => {
     setIsCreateIssueModalOpen(true);
@@ -50,13 +41,10 @@ function Task({
   };
 
   const handleCreateTask = (taskId, updatedTask) => {
-    handleUpdate(taskId, { ...task, ...updatedTask });
-    setIssueInfo({
-      issueTitle: updatedTask.title || '', // Set issueInfo with the updated values
-      assignedTo: updatedTask.assignedTo || '',
-      assignee: updatedTask.assignee || '',
-    });
+    const updatedTaskWithIssueTitle = { ...updatedTask, issueTitle: updatedTask.title || '' };
+    handleUpdate(taskId, updatedTaskWithIssueTitle);
   };
+  
 
   return (
     <ScaleFade in={true} unmountOnExit>
@@ -103,8 +91,8 @@ function Task({
             isOpen={isCreateIssueModalOpen}
             onClose={closeCreateIssueModal}
             onCreateTask={handleCreateTask}
-            taskId={task.id} column={undefined}          
-            />
+            taskId={task.id}
+            column={undefined} taskDetails={undefined}          />
 
           <IconButton
             position="absolute"
@@ -122,10 +110,10 @@ function Task({
             }}
             onClick={handleDeleteClick}
           />
-          {/* Display updated data from issueInfo state */}
-          <p>{`Issue Title: ${issueInfo.issueTitle}`}</p>
-          <p>{`Assigned by: ${issueInfo.assignee}`}</p>
-          <p>{`Assigned to: ${issueInfo.assignedTo}`}</p>
+          {/* Display task details */}
+          <p>{`Issue Title: ${task.issueTitle}`}</p>
+          <p>{`Assigned by: ${task.assignee}`}</p>
+          <p>{`Assigned to: ${task.assignedTo}`}</p>
         </div>
       </Box>
     </ScaleFade>

@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Modal,
   ModalOverlay,
@@ -15,18 +15,35 @@ import {
   Input,
   Button,
 } from '@chakra-ui/react';
-import useColumnTasks from '../hooks/useColumnTasks';
-import { ColumnType } from '../utils/enums';
-import Task from './Task';
 
-function CreateIssue({ isOpen, onClose, column, onCreateTask, taskId }) {
+function CreateIssue({
+  isOpen,
+  onClose,
+  column,
+  onCreateTask,
+  taskId,
+  taskDetails,
+}) {
   const [issueTitle, setIssueTitle] = useState('');
   const [issueDescription, setIssueDescription] = useState('');
   const [assignedTo, setAssignedTo] = useState('');
   const [assignee, setAssignee] = useState('');
-  const [status, setStatus] = useState('TODO');
+  const [status, setStatus] = useState('');
   const [priority, setPriority] = useState('low');
   const [issueType, setIssueType] = useState('bug');
+  const [draggedTaskInfo, setDraggedTaskInfo] = useState(null);
+
+  useEffect(() => {
+    if (isOpen && taskDetails) {
+      setIssueTitle(taskDetails.title || ''); // Fill title from taskDetails
+      setIssueDescription(taskDetails.description || '');
+      setAssignedTo(taskDetails.assignedTo || '');
+      setAssignee(taskDetails.assignee || '');
+      setStatus(taskDetails.status || '');
+      setPriority(taskDetails.priority || 'low');
+      setIssueType(taskDetails.issueType || 'bug');
+    }
+  }, [isOpen, taskDetails]);
 
   const handleCreateTask = () => {
     const taskInfo = {
@@ -43,13 +60,33 @@ function CreateIssue({ isOpen, onClose, column, onCreateTask, taskId }) {
     onClose();
   };
 
+  const handleDragStart = () => {
+    const taskInfo = {
+      issueTitle,
+      assignedTo,
+      assignee,
+      status,
+      priority,
+      issueType,
+    };
+    setDraggedTaskInfo(taskInfo);
+  };
+
+  const handleDragEnd = () => {
+    setDraggedTaskInfo(null);
+  };
+
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="xl">
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Create Issue</ModalHeader>
         <ModalCloseButton />
-        <ModalBody overflowY="auto">
+        <ModalBody
+          onDragStart={handleDragStart}
+          onDragEnd={handleDragEnd}
+          draggable
+        >
           <Input
             placeholder="Issue Title"
             mb={4}
@@ -94,6 +131,7 @@ function CreateIssue({ isOpen, onClose, column, onCreateTask, taskId }) {
               id="Status"
               placeholder="Select Status"
               value={status}
+              isDisabled={true}
               onChange={(e) => setStatus(e.target.value)}
             >
               <option value="Todo">TODO</option>

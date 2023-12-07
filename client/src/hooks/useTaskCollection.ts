@@ -14,10 +14,9 @@ function useTaskCollection() {
         column: ColumnType.TO_DO,
         title: 'Task 1',
         color: 'blue.300',
-        issueTitle: 'Issue 1',
-        assignedTo: 'User 1',
-        assignee: 'User 2',
-        // Other properties...
+        issueTitle: '',
+        assignedTo: '',
+        assignee: '',
       },
     ],
     [ColumnType.IN_PROGRESS]: [
@@ -26,10 +25,9 @@ function useTaskCollection() {
         column: ColumnType.IN_PROGRESS,
         title: 'Task 2',
         color: 'yellow.300',
-        issueTitle: 'Issue 2',
-        assignedTo: 'User 3',
-        assignee: 'User 4',
-        // Other properties...
+        issueTitle: '',
+        assignedTo: '',
+        assignee: '',
       },
     ],
     [ColumnType.BLOCKED]: [
@@ -38,10 +36,9 @@ function useTaskCollection() {
         column: ColumnType.BLOCKED,
         title: 'Task 3',
         color: 'red.300',
-        issueTitle: 'Issue 3',
-        assignedTo: 'User 5',
-        assignee: 'User 6',
-        // Other properties...
+        issueTitle: '',
+        assignedTo: '',
+        assignee: '',
       },
     ],
     [ColumnType.COMPLETED]: [
@@ -50,10 +47,9 @@ function useTaskCollection() {
         column: ColumnType.COMPLETED,
         title: 'Task 4',
         color: 'green.300',
-        issueTitle: 'Issue 4',
-        assignedTo: 'User 7',
-        assignee: 'User 8',
-        // Other properties...
+        issueTitle: '',
+        assignedTo: '',
+        assignee: '',
       },
     ],
   });

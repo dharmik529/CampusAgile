@@ -21,6 +21,7 @@ import {
   useColorModeValue,
   Stack,
   IconButton,
+  Select,
 } from '@chakra-ui/react';
 import { ArrowBackIcon } from '@chakra-ui/icons';
 
@@ -48,7 +49,9 @@ function Projects() {
     const fetchProjects = async () => {
       try {
         // Fetch projects
-        const projectsResponse = await fetch('http://localhost:3000/project/findAll');
+        const projectsResponse = await fetch(
+          'http://localhost:3000/project/findAll',
+        );
         if (!projectsResponse.ok) {
           throw new Error('Failed to fetch projects');
         }
@@ -63,7 +66,9 @@ function Projects() {
         setProjectsList(projectsData);
 
         // Fetch status options
-        const statusResponse = await fetch('http://localhost:3000/project/statusOptions');
+        const statusResponse = await fetch(
+          'http://localhost:3000/project/statusOptions',
+        );
         if (!statusResponse.ok) {
           throw new Error('Failed to fetch status options');
         }
@@ -71,7 +76,9 @@ function Projects() {
         setStatusOptions(statusData);
 
         // Fetch priority options
-        const priorityResponse = await fetch('http://localhost:3000/project/priorityOptions');
+        const priorityResponse = await fetch(
+          'http://localhost:3000/project/priorityOptions',
+        );
         if (!priorityResponse.ok) {
           throw new Error('Failed to fetch priority options');
         }
@@ -85,15 +92,15 @@ function Projects() {
       }
     };
 
-
-
-
     if (storedProjects) {
       try {
         setProjectsList(JSON.parse(storedProjects));
         setIsLoading(false);
       } catch (error) {
-        console.error('Error parsing projects from local storage:', error.message);
+        console.error(
+          'Error parsing projects from local storage:',
+          error.message,
+        );
         // Handle the error as needed
         // You may choose to fetch projects again in case of parsing error
         fetchProjects();
@@ -103,10 +110,11 @@ function Projects() {
     }
   }, []);
 
-
   const handleCreateProject = async () => {
     if (projectName.trim() !== '') {
       try {
+        const priorityText = getPriorityText(selectedPriority);
+        const statusText = getStatusText(selectedStatus);
         const response = await fetch('http://localhost:3000/project/create', {
           method: 'POST',
           headers: {
@@ -115,12 +123,10 @@ function Projects() {
           body: JSON.stringify({
             name: projectName,
             description: projectDescription,
-            priority: null,
-            status: null,
+            priority: priorityText,
+            status: statusText, 
             createdByUser: null,
-          }
-          ),
-
+          }),
         });
 
         if (!response.ok) {
@@ -133,14 +139,19 @@ function Projects() {
         // Fetch the updated list of projects
         const fetchUpdatedProjects = async () => {
           try {
-            const projectsResponse = await fetch('http://localhost:3000/project/findAll');
+            const projectsResponse = await fetch(
+              'http://localhost:3000/project/findAll',
+            );
             if (!projectsResponse.ok) {
               throw new Error('Failed to fetch projects');
             }
             const updatedProjectsData = await projectsResponse.json();
             console.log('Fetched Updated Projects:', updatedProjectsData);
 
-            localStorage.setItem('projectsList', JSON.stringify(updatedProjectsData));
+            localStorage.setItem(
+              'projectsList',
+              JSON.stringify(updatedProjectsData),
+            );
             setProjectsList(updatedProjectsData);
             setIsLoading(false);
           } catch (error) {
@@ -159,7 +170,6 @@ function Projects() {
       }
     }
   };
-
 
   const openDeleteModal = (projectId) => {
     setIsDeleteModalOpen(true);
@@ -183,6 +193,40 @@ function Projects() {
     }
   };
 
+  // Function to map selected status option to text
+const getStatusText = (selectedStatus) => {
+  switch (selectedStatus) {
+    case 'Active':
+      return 'Open';
+    case 'In Progress':
+      return 'InProgress';
+    case 'Completed':
+      return 'Done';
+    case 'On Hold':
+      return 'OnHold';
+    default:
+      return '';
+  }
+};
+
+// Function to map selected priority option to text
+const getPriorityText = (selectedPriority) => {
+  switch (selectedPriority) {
+    case 'Lowest':
+      return 'Lowest';
+    case 'Low':
+      return 'Low';
+    case 'Medium':
+      return 'Medium';
+    case 'High':
+      return 'High';
+    case 'Highest':
+      return 'Highest';
+    default:
+      return '';
+  }
+};
+
   return (
     <Center minH={'100vh'} bg={useColorModeValue('gray.100', 'gray.900')}>
       <Box
@@ -192,7 +236,7 @@ function Projects() {
         justifyContent="space-between"
         p={4}
         marginX="auto"
-        marginTop="10%"
+        marginTop="5%"
         marginBottom="4%"
       >
         <Box w="48%">
@@ -224,34 +268,36 @@ function Projects() {
                   onChange={(e) => setProjectDescription(e.target.value)}
                 />
               </FormControl>
+
               <FormControl id="status" mb={4}>
                 <FormLabel>Status</FormLabel>
-                <select
+                <Select
                   value={selectedStatus}
                   onChange={(e) => setSelectedStatus(e.target.value)}
+                  placeholder="Select Status"
+                  mt={2}
                 >
-                  {statusOptions.map((option) => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
+                  <option value="Active">Active</option>
+                  <option value="In Progress">In Progress</option>
+                  <option value="Completed">Completed</option>
+                  <option value="On Hold">On Hold</option>
+                </Select>
               </FormControl>
               <FormControl id="priority" mb={4}>
                 <FormLabel>Priority</FormLabel>
-                <select
+                <Select
                   value={selectedPriority}
                   onChange={(e) => setSelectedPriority(e.target.value)}
+                  placeholder="Select Priority"
+                  mt={2}
                 >
-                  {priorityOptions.map((option) => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
+                  <option value="Lowest">Lowest</option>
+                  <option value="Low">Low</option>
+                  <option value="Medium">Medium</option>
+                  <option value="High">High</option>
+                  <option value="Highest">Highest</option>
+                </Select>
               </FormControl>
-
-
 
               <Button
                 colorScheme="blue"
@@ -270,9 +316,11 @@ function Projects() {
             {isLoading ? (
               <Text>Loading projects...</Text>
             ) : (
-              projectsList.map((project) => (
+              [...projectsList].reverse().map((project) => (
                 <React.Fragment key={project.project_id}>
-                  <div onClick={() => navigate(`/kanban/${project.project_id}`)}>
+                  <div
+                    onClick={() => navigate(`/kanban/${project.project_id}`)}
+                  >
                     <Box
                       bg={useColorModeValue('white', 'gray.700')}
                       boxShadow={'md'}
@@ -307,7 +355,6 @@ function Projects() {
             )}
           </Stack>
         </Box>
-
 
         <Modal isOpen={isDeleteModalOpen} onClose={closeDeleteModal}>
           <ModalOverlay />
