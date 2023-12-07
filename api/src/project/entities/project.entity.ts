@@ -1,6 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToOne } from 'typeorm';
 import { User } from '../../user/entities/user.entity';
-import { Kanban } from "../../kanban/entities/kanban.entity";
 
 export enum ProjectStatus {
   Open = 'Active',
@@ -37,9 +36,5 @@ export class Project {
 
   @ManyToOne(type => User)
   @JoinColumn({ name: "created_by_user" })
-  createdByUser: User;
-
-  @OneToOne(type => Kanban, kanban => kanban.project, { cascade: true, eager: true })
-  @JoinColumn({ name: "kanbanid" })
-  kanban: Kanban;
+  createdByUser: string; // Change the type to string
 }

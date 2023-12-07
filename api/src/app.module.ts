@@ -9,16 +9,12 @@ import { IssueModule } from './issue/issue.module';
 import typeOrmConfig from './typeorm.config';
 import { AttachmentModule } from './attachment/attachment.module';
 import { AuthModule } from './auth/auth.module';
-import { KanbanModule } from './kanban/kanban.module';
-import { IssueKanban } from './kanban/entities/issue_kanban.entity';
-import { Kanban } from './kanban/entities/kanban.entity';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({
       ...typeOrmConfig, // Include other configurations from typeOrmConfig
-      entities: [Kanban, IssueKanban],
     }),
     ConfigModule.forRoot(),
     UserModule,
@@ -26,7 +22,6 @@ import { Kanban } from './kanban/entities/kanban.entity';
     IssueModule,
     AttachmentModule,
     AuthModule,
-    KanbanModule,
   ],
   controllers: [AppController],
   providers: [AppService],

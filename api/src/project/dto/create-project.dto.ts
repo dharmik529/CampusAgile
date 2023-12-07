@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, IsEnum, IsOptional } from 'class-validator';
+import { IsNotEmpty, IsString, IsEnum, IsOptional, IsEmail } from 'class-validator';
 import { User } from '../../user/entities/user.entity';
 import { ProjectPriority, ProjectStatus } from '../entities/project.entity';
 
@@ -19,5 +19,7 @@ export class CreateProjectDto {
   @IsEnum(ProjectStatus)
   status: ProjectStatus;
 
-  createdByUser: User; // Modify the type to match your entity
+  @IsNotEmpty()
+  @IsEmail() // Validate that createdByUser is a valid email
+  createdByUser: string; // Change the type to string for the email
 }

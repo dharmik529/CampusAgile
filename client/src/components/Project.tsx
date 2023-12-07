@@ -28,17 +28,20 @@ function Projects() {
   const [projectName, setProjectName] = useState('');
   const [projectDescription, setProjectDescription] = useState('');
   const [projectsList, setProjectsList] = useState([]);
+  const [userEmail, setUserEmail] = useState('');
   const [isLoading, setIsLoading] = useState(true);
-  const userEmail = localStorage.getItem('userEmail');
-  console.log('Retrieved User Email:', userEmail); 
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedProjectToDelete, setSelectedProjectToDelete] = useState(null);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [error, setError] = useState('');
+
+
   const navigate = useNavigate();
 
   useEffect(() => {
     const storedProjects = localStorage.getItem('projectsList');
-    
+
     const fetchProjects = async () => {
       try {
         const response = await fetch('http://localhost:3000/project/findAll');
@@ -46,21 +49,26 @@ function Projects() {
           throw new Error('Failed to fetch projects');
         }
         const data = await response.json();
-        console.log('Fetched Projects:', data); // Log the fetched projects data
-    
+
+        // Update the createdByUser field to use email
+        const updatedData = data.map(project => ({
+          ...project,
+          createdByUser: project.createdByUser.email, // Assuming email is a field in User entity
+        }));
+
         // Set localStorage if there is actual data
-        if (data.length > 0) {
-          localStorage.setItem('projectsList', JSON.stringify(data));
+        if (updatedData.length > 0) {
+          localStorage.setItem('projectsList', JSON.stringify(updatedData));
         }
-    
-        setProjectsList(data);
+
+        setProjectsList(updatedData);
         setIsLoading(false);
       } catch (error) {
         console.error('Error fetching projects:', error.message);
         setIsLoading(false);
       }
     };
-  
+
     if (storedProjects) {
       try {
         setProjectsList(JSON.parse(storedProjects));
@@ -75,12 +83,13 @@ function Projects() {
       fetchProjects();
     }
   }, []);
-  
+
+
 
   const handleCreateProject = async () => {
     if (projectName.trim() !== '') {
       try {
-        const response = await fetch('https://api.campusagile.tech/project/create', {
+        const response = await fetch('http://localhost:3000/project/create', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -90,17 +99,17 @@ function Projects() {
             description: projectDescription,
             priority: null,
             status: null,
-            createdByUser: null,
+            createdByUser: userEmail, // Use the user's email instead of ID
           }),
         });
-  
+
         if (!response.ok) {
           throw new Error('Failed to create project');
         }
-  
+
         const message = await response.text();
         console.log(message);
-  
+
         // Fetch the updated list of projects
         const fetchUpdatedProjects = async () => {
           try {
@@ -110,7 +119,7 @@ function Projects() {
             }
             const updatedProjectsData = await projectsResponse.json();
             console.log('Fetched Updated Projects:', updatedProjectsData);
-  
+
             localStorage.setItem('projectsList', JSON.stringify(updatedProjectsData));
             setProjectsList(updatedProjectsData);
             setIsLoading(false);
@@ -119,9 +128,9 @@ function Projects() {
             setIsLoading(false);
           }
         };
-  
+
         fetchUpdatedProjects(); // Fetch the updated projects after creating a new one
-  
+
         setProjectName('');
         setProjectDescription('');
       } catch (error) {
@@ -130,7 +139,7 @@ function Projects() {
       }
     }
   };
-  
+
 
   const openDeleteModal = (projectId) => {
     setIsDeleteModalOpen(true);

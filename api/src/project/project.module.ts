@@ -3,11 +3,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Project } from './entities/project.entity';
 import { ProjectService } from './project.service';
 import { ProjectController } from './project.controller';
-import { Kanban } from 'src/kanban/entities/kanban.entity';
+import { UserService } from 'src/user/user.service';
+import { User } from 'src/issue/entities/issue.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Project, Kanban])],
+  imports: [TypeOrmModule.forFeature([Project, User])],
   controllers: [ProjectController],
-  providers: [ProjectService],
+  providers: [ProjectService, UserService],
 })
 export class ProjectModule { }

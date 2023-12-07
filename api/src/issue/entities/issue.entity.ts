@@ -11,7 +11,6 @@ import {
 } from 'typeorm';
 import { User } from '../../user/entities/user.entity';
 // import { Kanban } from "../../kanban/entities/kanban.entity";
-import { IssueKanban } from 'src/kanban/entities/issue_kanban.entity';
 
 export enum IssueStatus {
   Open = 'ToDo',
@@ -68,10 +67,6 @@ export class Issue {
 
   @UpdateDateColumn()
   updated_at: Date;
-
-  @ManyToMany(type => IssueKanban, issueKanban => issueKanban.issue)
-  @JoinTable({ name: 'issue_kanban' })
-  issueKanbans: IssueKanban[]; // New line
 }
 export { User };
 
