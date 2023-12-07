@@ -299,6 +299,16 @@ const getPriorityText = (selectedPriority) => {
                 </Select>
               </FormControl>
 
+              <FormControl id="Email" mb={4}>
+                <FormLabel>Created by:</FormLabel>
+                <Input
+                  type="text"
+                  isDisabled={true}
+                  value={userEmail}
+                  onChange={(e) => setUserEmail(e.target.value)}
+                />
+              </FormControl>
+
               <Button
                 colorScheme="blue"
                 onClick={handleCreateProject}
