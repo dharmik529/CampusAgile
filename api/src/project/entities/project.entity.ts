@@ -36,5 +36,5 @@ export class Project {
 
   @ManyToOne(type => User)
   @JoinColumn({ name: "created_by_user" })
-  createdByUser: string; // Change the type to string
+  createdByUser: User;
 }

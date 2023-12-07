@@ -4,13 +4,12 @@ import { Repository } from 'typeorm';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
 import { Project } from './entities/project.entity';
-import { UserService } from 'src/user/user.service';
+
 @Injectable()
 export class ProjectService {
   constructor(
     @InjectRepository(Project)
     private readonly projectRepository: Repository<Project>,
-    private readonly userService: UserService,
   ) { }
 
   async getProjects(): Promise<Project[]> {
@@ -18,25 +17,26 @@ export class ProjectService {
   }
 
   async createProject(createProjectDto: CreateProjectDto): Promise<String> {
-    // Check if the user with the given email exists
-    const existingUser = await this.userService.getUserByEmail(createProjectDto.createdByUser);
-
-    if (!existingUser) {
-      throw new NotFoundException(`User with email ${createProjectDto.createdByUser} not found`);
-    }
-
-    // If user exists, proceed with creating the project
     const project = new Project();
     project.name = createProjectDto.name;
     project.description = createProjectDto.description;
     project.status = createProjectDto.status;
     project.priority = createProjectDto.priority;
-    // Assign the email directly to createdByUser
     project.createdByUser = createProjectDto.createdByUser;
 
-    // Save the project
+    // Save the project first to generate its ID
     await this.projectRepository.save(project);
 
+    //const kanban = new Kanban();
+    //kanban.project = project;
+
+    // Save the Kanban with the project association
+    //await this.kanbanRepository.save(kanban);
+
+    // Associate the Kanban with the project
+    //project.kanban = kanban;
+
+    await this.projectRepository.save(project);
     return `The project was created successfully`;
   }
 

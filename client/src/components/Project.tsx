@@ -25,18 +25,21 @@ import {
 import { ArrowBackIcon } from '@chakra-ui/icons';
 
 function Projects() {
+  // Inside the Projects functional component
   const [projectName, setProjectName] = useState('');
   const [projectDescription, setProjectDescription] = useState('');
   const [projectsList, setProjectsList] = useState([]);
-  const [userEmail, setUserEmail] = useState('');
   const [isLoading, setIsLoading] = useState(true);
+  const [userEmail, setUserEmail] = useState(localStorage.getItem('userEmail'));
+  console.log('Retrieved User Email:', userEmail);
+
+  const [statusOptions, setStatusOptions] = useState([]);
+  const [priorityOptions, setPriorityOptions] = useState([]);
+  const [selectedStatus, setSelectedStatus] = useState('');
+  const [selectedPriority, setSelectedPriority] = useState('');
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedProjectToDelete, setSelectedProjectToDelete] = useState(null);
-  const [selectedUser, setSelectedUser] = useState(null);
-  const [error, setError] = useState('');
-
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -44,30 +47,46 @@ function Projects() {
 
     const fetchProjects = async () => {
       try {
-        const response = await fetch('http://localhost:3000/project/findAll');
-        if (!response.ok) {
+        // Fetch projects
+        const projectsResponse = await fetch('http://localhost:3000/project/findAll');
+        if (!projectsResponse.ok) {
           throw new Error('Failed to fetch projects');
         }
-        const data = await response.json();
+        const projectsData = await projectsResponse.json();
+        console.log('Fetched Projects:', projectsData);
 
-        // Update the createdByUser field to use email
-        const updatedData = data.map(project => ({
-          ...project,
-          createdByUser: project.createdByUser.email, // Assuming email is a field in User entity
-        }));
-
-        // Set localStorage if there is actual data
-        if (updatedData.length > 0) {
-          localStorage.setItem('projectsList', JSON.stringify(updatedData));
+        // Set localStorage if there is actual project data
+        if (projectsData.length > 0) {
+          localStorage.setItem('projectsList', JSON.stringify(projectsData));
         }
 
-        setProjectsList(updatedData);
+        setProjectsList(projectsData);
+
+        // Fetch status options
+        const statusResponse = await fetch('http://localhost:3000/project/statusOptions');
+        if (!statusResponse.ok) {
+          throw new Error('Failed to fetch status options');
+        }
+        const statusData = await statusResponse.json();
+        setStatusOptions(statusData);
+
+        // Fetch priority options
+        const priorityResponse = await fetch('http://localhost:3000/project/priorityOptions');
+        if (!priorityResponse.ok) {
+          throw new Error('Failed to fetch priority options');
+        }
+        const priorityData = await priorityResponse.json();
+        setPriorityOptions(priorityData);
+
         setIsLoading(false);
       } catch (error) {
         console.error('Error fetching projects:', error.message);
         setIsLoading(false);
       }
     };
+
+
+
 
     if (storedProjects) {
       try {
@@ -85,7 +104,6 @@ function Projects() {
   }, []);
 
 
-
   const handleCreateProject = async () => {
     if (projectName.trim() !== '') {
       try {
@@ -99,8 +117,10 @@ function Projects() {
             description: projectDescription,
             priority: null,
             status: null,
-            createdByUser: userEmail, // Use the user's email instead of ID
-          }),
+            createdByUser: null,
+          }
+          ),
+
         });
 
         if (!response.ok) {
@@ -204,6 +224,35 @@ function Projects() {
                   onChange={(e) => setProjectDescription(e.target.value)}
                 />
               </FormControl>
+              <FormControl id="status" mb={4}>
+                <FormLabel>Status</FormLabel>
+                <select
+                  value={selectedStatus}
+                  onChange={(e) => setSelectedStatus(e.target.value)}
+                >
+                  {statusOptions.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+              </FormControl>
+              <FormControl id="priority" mb={4}>
+                <FormLabel>Priority</FormLabel>
+                <select
+                  value={selectedPriority}
+                  onChange={(e) => setSelectedPriority(e.target.value)}
+                >
+                  {priorityOptions.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+              </FormControl>
+
+
+
               <Button
                 colorScheme="blue"
                 onClick={handleCreateProject}
