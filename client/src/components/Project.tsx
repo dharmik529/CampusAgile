@@ -36,6 +36,7 @@ function Projects() {
 
   useEffect(() => {
     const storedProjects = localStorage.getItem('projectsList');
+    
     const fetchProjects = async () => {
       try {
         const response = await fetch('http://localhost:3000/project/findAll');
@@ -43,19 +44,21 @@ function Projects() {
           throw new Error('Failed to fetch projects');
         }
         const data = await response.json();
-        setProjectsList(data);
-        setIsLoading(false);
-
-        // Only set localStorage if there is actual data
+        console.log('Fetched Projects:', data); // Log the fetched projects data
+    
+        // Set localStorage if there is actual data
         if (data.length > 0) {
           localStorage.setItem('projectsList', JSON.stringify(data));
         }
+    
+        setProjectsList(data);
+        setIsLoading(false);
       } catch (error) {
         console.error('Error fetching projects:', error.message);
         setIsLoading(false);
       }
     };
-
+  
     if (storedProjects) {
       try {
         setProjectsList(JSON.parse(storedProjects));
@@ -69,13 +72,13 @@ function Projects() {
     } else {
       fetchProjects();
     }
-  }, []); // Empty dependency array, so it runs once on mount
+  }, []);
+  
 
   const handleCreateProject = async () => {
     if (projectName.trim() !== '') {
       try {
-        // Create the project
-        const projectResponse = await fetch('http://localhost:3000/project/create', {
+        const response = await fetch('https://api.campusagile.tech/project/create', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -88,58 +91,35 @@ function Projects() {
             createdByUser: null,
           }),
         });
-
-        if (!projectResponse.ok) {
+  
+        if (!response.ok) {
           throw new Error('Failed to create project');
         }
-
-        const project = await projectResponse.json();
-
-        // Create the Kanban entry
-        const kanbanResponse = await fetch('http://localhost:3000/kanban/create', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            projectId: project.id, // Pass the project ID to associate with the Kanban entry
-            assignee: null, // Set the assignee data here
-            reporter: null, // Set the reporter data here
-          }),
-        });
-
-        if (!kanbanResponse.ok) {
-          throw new Error('Failed to create Kanban entry');
-        }
-
-        const kanban = await kanbanResponse.json();
-        console.log(kanban);
-
-        // Update the project with the generated Kanban ID
-        const updateProjectResponse = await fetch(`http://localhost:3000/project/update/${project.id}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            kanbanId: kanban.id, // Update the project with the generated Kanban ID
-          }),
-        });
-
-        if (!updateProjectResponse.ok) {
-          throw new Error('Failed to update project with Kanban ID');
-        }
-
-        const newProject = {
-          id: project.id,
-          name: project.name,
-          description: project.description,
+  
+        const message = await response.text();
+        console.log(message);
+  
+        // Fetch the updated list of projects
+        const fetchUpdatedProjects = async () => {
+          try {
+            const projectsResponse = await fetch('http://localhost:3000/project/findAll');
+            if (!projectsResponse.ok) {
+              throw new Error('Failed to fetch projects');
+            }
+            const updatedProjectsData = await projectsResponse.json();
+            console.log('Fetched Updated Projects:', updatedProjectsData);
+  
+            localStorage.setItem('projectsList', JSON.stringify(updatedProjectsData));
+            setProjectsList(updatedProjectsData);
+            setIsLoading(false);
+          } catch (error) {
+            console.error('Error fetching updated projects:', error.message);
+            setIsLoading(false);
+          }
         };
-
-        const updatedProjects = [...projectsList, newProject];
-        setProjectsList(updatedProjects);
-        localStorage.setItem('projectsList', JSON.stringify(updatedProjects));
-
+  
+        fetchUpdatedProjects(); // Fetch the updated projects after creating a new one
+  
         setProjectName('');
         setProjectDescription('');
       } catch (error) {
@@ -148,7 +128,7 @@ function Projects() {
       }
     }
   };
-
+  
 
   const openDeleteModal = (projectId) => {
     setIsDeleteModalOpen(true);
@@ -231,8 +211,8 @@ function Projects() {
               <Text>Loading projects...</Text>
             ) : (
               projectsList.map((project) => (
-                <React.Fragment key={project.id}>
-                  <div onClick={() => navigate(`/kanban/${project.id}`)}>
+                <React.Fragment key={project.project_id}>
+                  <div onClick={() => navigate(`/kanban/${project.project_id}`)}>
                     <Box
                       bg={useColorModeValue('white', 'gray.700')}
                       boxShadow={'md'}
@@ -241,10 +221,10 @@ function Projects() {
                       minHeight="75px"
                     >
                       <Text fontSize="lg" fontWeight="bold">
-                        {project.name}
+                        {project.project_name}
                       </Text>
                       <Text fontSize="sm" color="gray.500" mt={2}>
-                        {project.description}
+                        {project.project_description}
                       </Text>
                       {project.createdByUser && (
                         <Text fontSize="sm" color="blue.500" mt={2}>

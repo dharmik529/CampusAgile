@@ -37,7 +37,7 @@ const routes = [
   { path: '/', element: <Login /> },
   { path: '/home', element: <ProtectedRoute element={<Home />} /> },
   { path: '/Notification', element: <ProtectedRoute element={<Notification />} /> },
-  { path: '/kanban', element: <ProtectedRoute element={<App />} /> },
+  { path: '/kanban/:projectId', element: <ProtectedRoute element={<App />} /> },
   { path: '/login', element: <Login /> },
   { path: '/Scrum', element: <ProtectedRoute element={<Scrum />} /> },
   { path: '/accountsetting', element: <ProtectedRoute element={<AccountSetting />} /> },
