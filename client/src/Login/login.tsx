@@ -84,10 +84,12 @@ function Login() {
             localStorage.setItem('authToken', authToken);
             localStorage.setItem('fullName', data.user.full_name);
             localStorage.setItem('userEmail', data.user.email);
+            localStorage.setItem('userID', data.user.id);
 
             console.log('User successfully authenticated');
-            console.log('Token:', authToken); // Log the token to the console
+            console.log('Token:', authToken); 
             console.log('Full Name:', data.user.full_name);
+            console.log('userID:', data.user.id);
             console.log('Redirecting to /home');
 
             // Check if the 'navigate' function is defined
