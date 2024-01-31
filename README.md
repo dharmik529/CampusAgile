@@ -9,8 +9,10 @@
      <img src="https://github.com/dharmik529.png?size=50">
       Dharmik Patel
    </a>
+   <br>
    <a href="https://github.com/devv64bit">
      <img src="https://github.com/devv64Bit.png?size=50">
+      Dev Patel
    </a>
    <a href="https://github.com/love-p">
      <img src="https://github.com/love-p.png?size=50">
