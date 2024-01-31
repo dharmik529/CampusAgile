@@ -7,6 +7,7 @@
    
    <a href="https://github.com/dharmik529">
      <img src="https://github.com/dharmik529.png?size=50">
+      Dharmik Patel
    </a>
    <a href="https://github.com/devv64bit">
      <img src="https://github.com/devv64Bit.png?size=50">
